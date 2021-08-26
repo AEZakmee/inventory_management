@@ -4,7 +4,7 @@ import 'colors.dart';
 final kBorderRadius = BorderRadius.circular(15);
 final kInputFiledBorderRadius = BorderRadius.circular(35);
 
-final kAnimTypeLogin = Curves.bounceInOut;
+final kAnimTypeLogin = Curves.easeIn;
 final kAnimDurationLogin = Duration(milliseconds: 400);
 
 //Box decorations

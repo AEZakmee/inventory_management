@@ -8,15 +8,12 @@ import '../../../styles/constans.dart';
 import '../../../providers/login_provider.dart';
 
 class ArrowButtonBackground extends StatelessWidget {
-  const ArrowButtonBackground({
-    Key key,
-    this.hasShadow = false,
-    this.child,
-    @required this.height,
-  }) : super(key: key);
+  const ArrowButtonBackground(
+      {Key key, this.hasShadow = false, this.child, this.bottom = 0})
+      : super(key: key);
   final bool hasShadow;
   final Widget child;
-  final double height;
+  final double bottom;
   @override
   Widget build(BuildContext context) {
     return AnimatedPositioned(
@@ -24,7 +21,7 @@ class ArrowButtonBackground extends StatelessWidget {
       curve: kAnimTypeLogin,
       right: 0,
       left: 0,
-      top: height,
+      bottom: bottom,
       child: Center(
         child: Container(
           height: getProportionateScreenHeight(105),

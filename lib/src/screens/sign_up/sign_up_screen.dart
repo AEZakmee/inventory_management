@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../size_config.dart';
 import '../../styles/colors.dart';
-import 'components/body.dart';
+import 'components/body_updated.dart';
 import '../../providers/login_provider.dart';
 
 class SignUpScreen extends StatefulWidget {

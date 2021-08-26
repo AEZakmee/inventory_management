@@ -1,8 +1,6 @@
 import '../sign_up/sign_up_screen.dart';
-
 import '../../providers/user_provider.dart';
 import '../main/main_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
