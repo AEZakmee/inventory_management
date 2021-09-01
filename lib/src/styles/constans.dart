@@ -3,11 +3,17 @@ import 'colors.dart';
 
 final kBorderRadius = BorderRadius.circular(15);
 final kInputFiledBorderRadius = BorderRadius.circular(35);
+final kInputFiledBorderRadiusAdd = BorderRadius.circular(5);
 
 final kAnimTypeLogin = Curves.easeIn;
 final kAnimDurationLogin = Duration(milliseconds: 400);
 
 //Box decorations
+final kBoxShadowLite = BoxShadow(
+  color: Colors.black.withOpacity(0.2),
+  blurRadius: 5,
+  spreadRadius: 2,
+);
 final kBoxShadow = BoxShadow(
   color: Colors.black.withOpacity(0.3),
   blurRadius: 15,
@@ -42,5 +48,13 @@ final kErrorOutlineBorder = OutlineInputBorder(
 );
 final kEnabledOutlineBorder = OutlineInputBorder(
   borderRadius: kInputFiledBorderRadius,
+  borderSide: BorderSide(color: kMainColor),
+);
+final kOutlineBorderAdd = OutlineInputBorder(
+  borderRadius: kInputFiledBorderRadiusAdd,
   borderSide: BorderSide(color: kMainColorAccent),
+);
+final kEnabledOutlineBorderAdd = OutlineInputBorder(
+  borderRadius: kInputFiledBorderRadius,
+  borderSide: BorderSide(color: kMainColor),
 );

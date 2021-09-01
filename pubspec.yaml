@@ -35,7 +35,9 @@ dependencies:
   cloud_firestore: ^2.5.0
   flutter_spinkit: ^4.1.2
   flutter_keyboard_visibility: ^5.0.3
-  animated_text_kit: ^4.2.1
+  fluttertoast: ^4.0.1
+  uuid: ^2.0.4
+  rxdart: ^0.24.1
 
 dev_dependencies:
   flutter_test:

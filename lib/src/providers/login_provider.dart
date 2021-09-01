@@ -129,7 +129,6 @@ class LoginProvider extends ChangeNotifier {
   }
 
   bool get buttonPressed => _buttonPressed;
-
   //Data for animation
   double _overallPosition = 180;
   double get overallPosition =>
