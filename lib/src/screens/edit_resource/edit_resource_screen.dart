@@ -5,20 +5,18 @@ import '../../styles/colors.dart';
 import 'package:provider/provider.dart';
 import '../../size_config.dart';
 import 'components/body.dart';
+import 'components/pass_argument.dart';
 
-class EditResourceScreen extends StatefulWidget {
+class EditResourceScreen extends StatelessWidget {
   static const String routeName = '/edit_resource';
-
-  @override
-  _EditResourceScreenState createState() => _EditResourceScreenState();
-}
-
-class _EditResourceScreenState extends State<EditResourceScreen> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+    final args =
+        ModalRoute.of(context).settings.arguments as ScreenArgumentsResource;
+
     return ChangeNotifierProvider(
-      create: (_) => ResourceProvider(),
+      create: (_) => ResourceProvider(args.resource),
       child: Scaffold(
         backgroundColor: kBackgroundColor,
         body: Body(),

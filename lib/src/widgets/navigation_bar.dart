@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:inventory_management/src/model/resource.dart';
 import 'package:inventory_management/src/providers/user_provider.dart';
 import 'package:inventory_management/src/screens/edit_product/edit_product_screen.dart';
+import 'package:inventory_management/src/screens/edit_resource/components/pass_argument.dart';
 import 'package:inventory_management/src/screens/edit_resource/edit_resource_screen.dart';
 import 'package:inventory_management/src/screens/products/products_screen.dart';
 import 'package:inventory_management/src/styles/colors.dart';
@@ -31,9 +33,15 @@ class NavBar extends StatelessWidget {
               icon: Icons.storage,
               title: "Edit resource",
               press: () {
-                //Provider.of<UserProvider>(context, listen: false).editItemId =
-                //"0016411c-a76b-45dd-995f-210d71f1c97d";
-                Navigator.pushNamed(context, EditResourceScreen.routeName);
+                // Provider.of<UserProvider>(context, listen: false).editResource =
+                //     Resource(
+                //         name: "", type: ResourceType.Litres, quantity: 100);
+                Navigator.pushNamed(
+                  context,
+                  EditResourceScreen.routeName,
+                  arguments: ScreenArgumentsResource(
+                      Resource(quantity: 100, name: "sad")),
+                );
               },
             ),
             NavItem(

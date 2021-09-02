@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import '../size_config.dart';
 import 'colors.dart';
 
 final kBorderRadius = BorderRadius.circular(15);
@@ -50,11 +52,26 @@ final kEnabledOutlineBorder = OutlineInputBorder(
   borderRadius: kInputFiledBorderRadius,
   borderSide: BorderSide(color: kMainColor),
 );
+
+//Add products page
 final kOutlineBorderAdd = OutlineInputBorder(
   borderRadius: kInputFiledBorderRadiusAdd,
   borderSide: BorderSide(color: kMainColorAccent),
 );
 final kEnabledOutlineBorderAdd = OutlineInputBorder(
-  borderRadius: kInputFiledBorderRadius,
+  borderRadius: kInputFiledBorderRadiusAdd,
   borderSide: BorderSide(color: kMainColor),
 );
+final kErrorOutlineBorderAdd = OutlineInputBorder(
+  borderRadius: kInputFiledBorderRadiusAdd,
+  borderSide: BorderSide(color: kErrorColor),
+);
+
+kLongToast(String message) => Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.CENTER,
+      backgroundColor: kTextColor,
+      textColor: kMainColor,
+      fontSize: getProportionateScreenHeight(20),
+    );

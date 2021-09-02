@@ -1,4 +1,5 @@
 import 'package:inventory_management/src/model/product.dart';
+import 'package:inventory_management/src/model/resource.dart';
 
 import '../services/firestore_service.dart';
 
@@ -37,8 +38,4 @@ class UserProvider extends ChangeNotifier {
     await _auth.signOut();
     _currentUser = null;
   }
-
-  //EditProduct
-  String editItemId;
-  bool get isNewItem => editItemId == null || editItemId.isEmpty;
 }

@@ -32,20 +32,17 @@ class LoadingWidget extends StatelessWidget {
     Key key,
     @required this.child,
     @required this.hasLoadingError,
-    @required this.isLoading,
   }) : super(key: key);
   final Widget child;
   final bool hasLoadingError;
-  final bool isLoading;
   @override
   Widget build(BuildContext context) {
     return AnimatedCrossFade(
-      firstChild: !hasLoadingError ? child : LoadingErrorWidget(),
-      secondChild: Center(
-        child: CircularProgressIndicator(),
-      ),
-      crossFadeState:
-          !isLoading ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+      firstChild: child,
+      secondChild: LoadingErrorWidget(),
+      crossFadeState: !hasLoadingError
+          ? CrossFadeState.showFirst
+          : CrossFadeState.showSecond,
       duration: kAnimDurationLogin,
       reverseDuration: Duration(seconds: 0),
     );

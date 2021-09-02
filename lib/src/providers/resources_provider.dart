@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_management/src/model/resource.dart';
-import 'package:inventory_management/src/model/user.dart';
 import 'package:inventory_management/src/providers/user_provider.dart';
 import 'package:inventory_management/src/services/firestore_service.dart';
+import 'package:uuid/uuid.dart';
 
 class ResourceProvider extends ChangeNotifier {
   var _db = FirestoreService();
@@ -10,57 +10,84 @@ class ResourceProvider extends ChangeNotifier {
   TextEditingController nameController = TextEditingController();
   TextEditingController quantityController = TextEditingController();
 
+  ResourceProvider(Resource resource) {
+    if (resource == null) {
+      _resource = Resource(
+        type: ResourceType.Kilos,
+        name: "",
+        quantity: 0,
+      );
+    } else {
+      this.resource = resource;
+    }
+  }
   Resource _resource;
   set resource(value) {
     _resource = value;
     nameController.text = _resource.name;
     quantityController.text = _resource.quantity.toString();
+    isEdit = true;
   }
+
+  bool isEdit = false;
 
   get resourceType => _resource.type;
   set resourceType(ResourceType type) {
-    _resource.type = type;
+    if (_resource.type != type) {
+      _resource.type = type;
+      notifyListeners();
+    }
+  }
+
+  //Error handling
+  bool _showErrorsString = false;
+  get showErrorsString => _showErrorsString;
+  String _errorsString = "";
+  get errorsString => _errorsString;
+  void setError({bool value, String error = ""}) {
+    _errorsString = error;
+    _showErrorsString = value;
     notifyListeners();
   }
 
-  bool _hasLoadingError = false;
-  get hasLoadingError => _hasLoadingError;
-  set hasLoadingError(value) {
-    _hasLoadingError = value;
-    notifyListeners();
-  }
-
-  bool _isLoading = true;
-  get isLoading => _isLoading;
-  set isLoading(value) {
-    _isLoading = value;
-    notifyListeners();
-  }
+  bool get hasErrors =>
+      _nameHasError ||
+      _quantityHasError ||
+      _resource.name.isEmpty ||
+      _resource.quantity == 0;
 
   //Load product
-  Future<void> _loadProduct(String resourceId) async {
-    Resource resource;
+  Future<bool> saveProduct() async {
+    if (hasErrors) {
+      setError(value: true, error: "Please enter all the required information");
+      return false;
+    }
     try {
-      resource = await _db.fetchResource(resourceId);
-    } on FetchException catch (e) {
-      hasLoadingError = true;
-      print('Error in res provider: ' + e.errMsg());
-    } finally {
-      this.resource = resource;
-      print('resource loaded');
+      if (!isEdit) {
+        //Save new product
+        Resource newRes = Resource(
+          uniqueID: Uuid().v4(),
+          type: _resource.type,
+          quantity: _resource.quantity,
+          name: _resource.name,
+        );
+        bool exists = await _db.resourceExists(newRes);
+        if (exists) {
+          setError(value: true, error: "Product with that name already exists");
+          return false;
+        } else {
+          await _db.addResource(newRes);
+          return true;
+        }
+      } else {
+        await _db.addResource(_resource);
+        return true;
+      }
+    } on AddException catch (e) {
+      setError(value: true, error: e.errMsg());
+      return false;
     }
-  }
-
-  Future<void> loadProduct() async {
-    await Future.delayed(Duration(seconds: 3));
-    bool isNewProduct = UserProvider().isNewItem;
-    if (!isNewProduct) {
-      String resourceId = UserProvider().editItemId;
-      await _loadProduct(resourceId);
-    } else {
-      _resource = Resource();
-    }
-    isLoading = false;
+    return false;
   }
 
   //User input handle;
@@ -81,6 +108,7 @@ class ResourceProvider extends ChangeNotifier {
   }
 
   void setData(String data, ResourceField field) {
+    setError(value: false);
     switch (field) {
       case ResourceField.Name:
         nameHasError = false;
