@@ -38,6 +38,15 @@ class FirestoreService {
     });
   }
 
+  Stream<List<Resource>> getResources() {
+    return _db
+        .collection('resources')
+        .snapshots()
+        .map((query) => query.docs)
+        .map((snapshot) =>
+            snapshot.map((doc) => Resource.fromJson(doc.data())).toList());
+  }
+
   Future<bool> _docExists(String collection, String name) async {
     var snapshots = await _db
         .collection(collection)
@@ -62,6 +71,10 @@ class FirestoreService {
         .doc(resource.uniqueID)
         .set(resource.toMap())
         .onError((error, stackTrace) => throw new AddException());
+  }
+
+  Future<void> deleteResource(String id) {
+    return _db.collection('resources').doc(id).delete();
   }
 
   Future<void> addProduct(Product product) {

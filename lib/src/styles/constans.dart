@@ -4,6 +4,7 @@ import '../size_config.dart';
 import 'colors.dart';
 
 final kBorderRadius = BorderRadius.circular(15);
+final kBorderRadiusLite = BorderRadius.circular(5);
 final kInputFiledBorderRadius = BorderRadius.circular(35);
 final kInputFiledBorderRadiusAdd = BorderRadius.circular(5);
 
@@ -71,7 +72,7 @@ kLongToast(String message) => Fluttertoast.showToast(
       msg: message,
       toastLength: Toast.LENGTH_LONG,
       gravity: ToastGravity.CENTER,
-      backgroundColor: kTextColor,
+      backgroundColor: Colors.white60,
       textColor: kMainColor,
       fontSize: getProportionateScreenHeight(20),
     );

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:inventory_management/src/providers/edit_resource_provider.dart';
+import 'package:provider/provider.dart';
 import '../styles/colors.dart';
 import '../styles/constans.dart';
 import '../size_config.dart';
@@ -32,6 +34,41 @@ class TypeButton extends StatelessWidget {
               color: isClicked ? kBackgroundColor : kMainColor,
               fontSize: getProportionateScreenHeight(20),
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class TypeButtonAdd extends StatelessWidget {
+  const TypeButtonAdd({
+    Key key,
+    @required this.value,
+  }) : super(key: key);
+  final int value;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Provider.of<EditResourceProvider>(context, listen: false)
+            .addQuantity(value);
+      },
+      child: Container(
+        height: getProportionateScreenHeight(35),
+        width: getProportionateScreenWidth(50),
+        decoration: BoxDecoration(
+          color: value < 0 ? kMainColorLight : kMainColorAccent,
+          borderRadius: kInputFiledBorderRadiusAdd,
+        ),
+        child: Center(
+          child: Text(
+            value.toString(),
+            style: TextStyle(
+                color: value < 0 ? kMainColor : kBackgroundColor,
+                fontSize: getProportionateScreenHeight(20),
+                fontWeight: FontWeight.bold),
           ),
         ),
       ),

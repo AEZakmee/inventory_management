@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../providers/resources_provider.dart';
+import '../../../providers/edit_resource_provider.dart';
 import '../../../styles/colors.dart';
 import '../../../styles/constans.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +19,7 @@ class CustomTextField extends StatelessWidget {
   final String label;
   @override
   Widget build(BuildContext context) {
-    return Consumer<ResourceProvider>(
+    return Consumer<EditResourceProvider>(
       builder: (context, prov, child) {
         return Padding(
           padding: EdgeInsets.only(

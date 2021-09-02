@@ -4,11 +4,11 @@ import '../../providers/edit_resource_provider.dart';
 import '../../styles/colors.dart';
 import 'package:provider/provider.dart';
 import '../../size_config.dart';
-import 'components/body.dart';
+import 'components/quantity_body.dart';
 import 'components/pass_argument.dart';
 
-class EditResourceScreen extends StatelessWidget {
-  static const String routeName = '/edit_resource';
+class EditResourceQuantityScreen extends StatelessWidget {
+  static const String routeName = '/edit_resource_quantity';
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);

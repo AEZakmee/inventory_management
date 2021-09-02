@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_management/src/model/resource.dart';
-import 'package:inventory_management/src/providers/user_provider.dart';
 import 'package:inventory_management/src/services/firestore_service.dart';
 import 'package:uuid/uuid.dart';
 
-class ResourceProvider extends ChangeNotifier {
+class EditResourceProvider extends ChangeNotifier {
   var _db = FirestoreService();
 
   TextEditingController nameController = TextEditingController();
   TextEditingController quantityController = TextEditingController();
 
-  ResourceProvider(Resource resource) {
+  EditResourceProvider(Resource resource) {
     if (resource == null) {
       _resource = Resource(
         type: ResourceType.Kilos,
@@ -55,6 +54,11 @@ class ResourceProvider extends ChangeNotifier {
       _quantityHasError ||
       _resource.name.isEmpty ||
       _resource.quantity == 0;
+
+  void addQuantity(int value) {
+    _resource.quantity += value.toDouble();
+    quantityController.text = _resource.quantity.toString();
+  }
 
   //Load product
   Future<bool> saveProduct() async {

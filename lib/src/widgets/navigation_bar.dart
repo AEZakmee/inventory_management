@@ -5,6 +5,7 @@ import 'package:inventory_management/src/screens/edit_product/edit_product_scree
 import 'package:inventory_management/src/screens/edit_resource/components/pass_argument.dart';
 import 'package:inventory_management/src/screens/edit_resource/edit_resource_screen.dart';
 import 'package:inventory_management/src/screens/products/products_screen.dart';
+import 'package:inventory_management/src/screens/resources_screen/resources_screen.dart';
 import 'package:inventory_management/src/styles/colors.dart';
 import 'package:inventory_management/src/styles/constans.dart';
 import 'package:provider/provider.dart';
@@ -31,17 +32,9 @@ class NavBar extends StatelessWidget {
           children: [
             NavItem(
               icon: Icons.storage,
-              title: "Edit resource",
+              title: "Resources",
               press: () {
-                // Provider.of<UserProvider>(context, listen: false).editResource =
-                //     Resource(
-                //         name: "", type: ResourceType.Litres, quantity: 100);
-                Navigator.pushNamed(
-                  context,
-                  EditResourceScreen.routeName,
-                  arguments: ScreenArgumentsResource(
-                      Resource(quantity: 100, name: "sad")),
-                );
+                Navigator.pushNamed(context, ResourcesScreen.routeName);
               },
             ),
             NavItem(

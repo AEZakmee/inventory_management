@@ -15,7 +15,7 @@ class UserProvider extends ChangeNotifier {
   }
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirestoreService _firestoreService = FirestoreService();
+  final FirestoreService _db = FirestoreService();
 
   AppUser _currentUser;
   get currentUser => _currentUser;
@@ -24,10 +24,12 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Stream<List<Resource>> get listResources => _db.getResources();
+
   Future<bool> isLoggedIn() async {
     var firebaseUser = _auth.currentUser;
     if (firebaseUser == null) return false;
-    var user = await _firestoreService.fetchUser(firebaseUser.uid);
+    var user = await _db.fetchUser(firebaseUser.uid);
     if (user == null) return false;
     currentUser = user;
     print(currentUser.name + " is signed in");

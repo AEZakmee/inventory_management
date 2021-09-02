@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
 import '../../../model/resource.dart';
 import '../../../styles/colors.dart';
+import '../../../styles/constans.dart';
 import '../../../widgets/type_button.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 import '../../../providers/edit_resource_provider.dart';
 import 'package:provider/provider.dart';
 import '../../../size_config.dart';
@@ -31,63 +32,39 @@ class _BodyState extends State<Body> {
                 height: getProportionateScreenHeight(20),
               ),
               Text(
-                prov.isEdit ? "Update resource data" : "Enter resource data",
+                "Update quantity",
                 style: TextStyle(
                   fontSize: getProportionateScreenHeight(30),
                   color: kMainColor,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              CustomTextField(
-                textController: prov.nameController,
-                field: ResourceField.Name,
-                hintText: "Enter resource name",
-                label: "Resource Name",
+              SizedBox(
+                height: getProportionateScreenHeight(30),
               ),
               CustomTextField(
                 textController: prov.quantityController,
-                field: ResourceField.Quantity,
-                hintText: "Enter quantity",
+                field: ResourceField.Name,
+                hintText: "Enter Quantity",
                 label: "Quantity",
               ),
               SizedBox(
                 height: getProportionateScreenHeight(10),
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TypeButton(
-                    text: 'Kilos',
-                    isClicked: prov.resourceType == ResourceType.Kilos,
-                    onClicked: () => prov.resourceType = ResourceType.Kilos,
-                  ),
-                  Spacer(),
-                  TypeButton(
-                    text: 'Litres',
-                    isClicked: prov.resourceType == ResourceType.Litres,
-                    onClicked: () => prov.resourceType = ResourceType.Litres,
-                  ),
+                  TypeButtonAdd(value: -100),
+                  TypeButtonAdd(value: -10),
+                  TypeButtonAdd(value: -1),
+                  TypeButtonAdd(value: 1),
+                  TypeButtonAdd(value: 10),
+                  TypeButtonAdd(value: 100),
                 ],
               ),
-              SizedBox(
-                height: getProportionateScreenHeight(30),
-              ),
-              if (prov.showErrorsString)
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: getProportionateScreenHeight(5),
-                  ),
-                  child: Text(
-                    prov.errorsString,
-                    style: TextStyle(
-                      color: kErrorColor,
-                      fontSize: getProportionateScreenHeight(16),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
               Padding(
                 padding: EdgeInsets.only(
-                  top: getProportionateScreenHeight(10),
+                  top: getProportionateScreenHeight(40),
                 ),
                 child: LoadingButtonCustom(
                   controller: _btnController,
