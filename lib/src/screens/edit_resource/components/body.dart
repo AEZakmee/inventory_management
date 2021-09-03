@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:inventory_management/src/styles/constans.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import '../../../model/resource.dart';
 import '../../../styles/colors.dart';
@@ -43,12 +44,14 @@ class _BodyState extends State<Body> {
                 field: ResourceField.Name,
                 hintText: "Enter resource name",
                 label: "Resource Name",
+                prov: prov,
               ),
               CustomTextField(
                 textController: prov.quantityController,
                 field: ResourceField.Quantity,
                 hintText: "Enter quantity",
                 label: "Quantity",
+                prov: prov,
               ),
               SizedBox(
                 height: getProportionateScreenHeight(10),
@@ -90,6 +93,17 @@ class _BodyState extends State<Body> {
                   top: getProportionateScreenHeight(10),
                 ),
                 child: LoadingButtonCustom(
+                  text: Provider.of<EditResourceProvider>(context).isEdit
+                      ? "Update resource"
+                      : "Save resource",
+                  onPressed: () async {
+                    bool success = await prov.saveProduct();
+                    if (success) {
+                      kLongToast('Product Saved');
+                      Navigator.of(context).pop();
+                    }
+                    _btnController.reset();
+                  },
                   controller: _btnController,
                 ),
               ),

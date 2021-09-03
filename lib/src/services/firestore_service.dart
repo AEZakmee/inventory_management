@@ -27,6 +27,14 @@ class FirestoreService {
         .then((value) => AppUser.fromJson(value.data()));
   }
 
+  Stream<AppUser> userStream(String userId) {
+    return _db
+        .collection('users')
+        .doc(userId)
+        .snapshots()
+        .map((event) => AppUser.fromJson(event.data()));
+  }
+
   Future<Resource> fetchResource(String resourceId) {
     return _db
         .collection('resources')

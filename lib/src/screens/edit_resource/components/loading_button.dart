@@ -9,31 +9,26 @@ import '../../../size_config.dart';
 
 class LoadingButtonCustom extends StatelessWidget {
   final RoundedLoadingButtonController controller;
-  const LoadingButtonCustom({Key key, this.controller}) : super(key: key);
+  final double width;
+  final Function onPressed;
+  final String text;
+  const LoadingButtonCustom(
+      {Key key,
+      @required this.controller,
+      this.width,
+      @required this.onPressed,
+      this.text})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return RoundedLoadingButton(
       controller: controller,
-      onPressed: () async {
-        bool success =
-            await Provider.of<EditResourceProvider>(context, listen: false)
-                .saveProduct();
-        if (success) {
-          kLongToast('Product Saved');
-          Navigator.of(context).pop();
-        } else {
-          controller.error();
-          Future.delayed(Duration(seconds: 1));
-        }
-        controller.reset();
-      },
-      width: SizeConfig.screenWidth - getProportionateScreenWidth(60),
+      onPressed: onPressed,
+      width: width ?? SizeConfig.screenWidth - getProportionateScreenWidth(60),
       borderRadius: getProportionateScreenHeight(5),
       color: kMainColor,
       child: Text(
-        Provider.of<EditResourceProvider>(context).isEdit
-            ? "Update resource"
-            : "Save resource",
+        text,
         style: TextStyle(
           color: kBackgroundColor,
           fontSize: getProportionateScreenHeight(20),

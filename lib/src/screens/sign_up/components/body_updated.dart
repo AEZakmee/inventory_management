@@ -43,108 +43,105 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    return KeyboardDismissOnTap(
-      child: Consumer<LoginProvider>(builder: (context, prov, child) {
-        return Stack(
-          children: [
-            Positioned(
-              top: 0,
-              right: 0,
-              left: 0,
-              child: AnimatedContainer(
-                duration: kAnimDurationLogin,
-                curve: kAnimTypeLogin,
-                height:
-                    getProportionateScreenHeight(prov.overallPosition + 180),
-                decoration: BoxDecoration(
-                  gradient: kLoginBackgroundGradient,
-                ),
-              ),
-            ),
-            AnimatedPositioned(
+    return Consumer<LoginProvider>(builder: (context, prov, child) {
+      return Stack(
+        children: [
+          Positioned(
+            top: 0,
+            right: 0,
+            left: 0,
+            child: AnimatedContainer(
               duration: kAnimDurationLogin,
               curve: kAnimTypeLogin,
-              right: 0,
-              left: 0,
-              top: getProportionateScreenHeight(prov.isSignUp
-                  ? prov.signUpFieldPosition
-                  : prov.loginFieldPosition),
-              child: AnimatedContainer(
-                duration: kAnimDurationLogin,
-                curve: kAnimTypeLogin,
-                color: Colors.transparent,
-                width: SizeConfig.screenWidth - getProportionateScreenWidth(40),
-                margin: EdgeInsets.symmetric(
-                  horizontal: getProportionateScreenWidth(20),
-                ),
-                child: Stack(
-                  children: [
-                    ArrowButtonBackground(
-                      hasShadow: true,
-                    ),
-                    Column(
-                      children: [
-                        AnimatedContainer(
-                          duration: kAnimDurationLogin,
-                          curve: kAnimTypeLogin,
-                          decoration: kBoxDecoration,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: getProportionateScreenWidth(20),
-                            ),
-                            child: Column(
-                              children: [
-                                ButtonsRow(),
-                                InputFields(),
-                                if (prov.hasAuthError)
-                                  Center(
-                                    child: Text(
-                                      prov.authErrorString,
-                                      style: TextStyle(
-                                        color: kErrorColor,
-                                        fontSize:
-                                            getProportionateScreenHeight(15),
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ),
-                                SizedBox(
-                                  height: getProportionateScreenHeight(55),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: getProportionateScreenHeight(55),
-                        ),
-                      ],
-                    ),
-                    ArrowButtonBackground(
-                      child: ArrowButton(
-                        onPress: () async {
-                          print("before");
-                          if (!prov.loginClicked) {
-                            print("after");
-                            var success = await Provider.of<LoginProvider>(
-                                    context,
-                                    listen: false)
-                                .signUp();
-                            if (success) {
-                              Navigator.pushReplacementNamed(
-                                  context, LoadingScreen.routeName);
-                            }
-                          }
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+              height: getProportionateScreenHeight(prov.overallPosition + 180),
+              decoration: BoxDecoration(
+                gradient: kLoginBackgroundGradient,
               ),
             ),
-          ],
-        );
-      }),
-    );
+          ),
+          AnimatedPositioned(
+            duration: kAnimDurationLogin,
+            curve: kAnimTypeLogin,
+            right: 0,
+            left: 0,
+            top: getProportionateScreenHeight(prov.isSignUp
+                ? prov.signUpFieldPosition
+                : prov.loginFieldPosition),
+            child: AnimatedContainer(
+              duration: kAnimDurationLogin,
+              curve: kAnimTypeLogin,
+              color: Colors.transparent,
+              width: SizeConfig.screenWidth - getProportionateScreenWidth(40),
+              margin: EdgeInsets.symmetric(
+                horizontal: getProportionateScreenWidth(20),
+              ),
+              child: Stack(
+                children: [
+                  ArrowButtonBackground(
+                    hasShadow: true,
+                  ),
+                  Column(
+                    children: [
+                      AnimatedContainer(
+                        duration: kAnimDurationLogin,
+                        curve: kAnimTypeLogin,
+                        decoration: kBoxDecoration,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: getProportionateScreenWidth(20),
+                          ),
+                          child: Column(
+                            children: [
+                              ButtonsRow(),
+                              InputFields(),
+                              if (prov.hasAuthError)
+                                Center(
+                                  child: Text(
+                                    prov.authErrorString,
+                                    style: TextStyle(
+                                      color: kErrorColor,
+                                      fontSize:
+                                          getProportionateScreenHeight(15),
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              SizedBox(
+                                height: getProportionateScreenHeight(55),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: getProportionateScreenHeight(55),
+                      ),
+                    ],
+                  ),
+                  ArrowButtonBackground(
+                    child: ArrowButton(
+                      onPress: () async {
+                        print("before");
+                        if (!prov.loginClicked) {
+                          print("after");
+                          var success = await Provider.of<LoginProvider>(
+                                  context,
+                                  listen: false)
+                              .signUp();
+                          if (success) {
+                            Navigator.pushReplacementNamed(
+                                context, LoadingScreen.routeName);
+                          }
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      );
+    });
   }
 }

@@ -1,15 +1,15 @@
 import 'dart:async';
+import 'package:inventory_management/src/model/user.dart';
+import 'package:inventory_management/src/providers/user_provider.dart';
+import 'package:inventory_management/src/widgets/disposable_widget.dart';
+import 'package:provider/provider.dart';
 
-import 'package:inventory_management/src/size_config.dart';
-
-import '../../screens/edit_product/edit_product_screen.dart';
-import '../../screens/edit_resource/edit_resource_screen.dart';
+import '../../size_config.dart';
 import '../../widgets/navigation_bar.dart';
-import '../../providers/user_provider.dart';
 import '../loading/loading_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'components/body.dart';
 
 class MainScreen extends StatefulWidget {
   static const String routeName = '/main_screen';
@@ -17,43 +17,37 @@ class MainScreen extends StatefulWidget {
   _MainScreenState createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainScreenState extends State<MainScreen> with DisposableWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  StreamSubscription<User> _sub;
   @override
   void initState() {
     super.initState();
-    _sub = _auth.authStateChanges().listen((User user) {
+    _auth.authStateChanges().listen((User user) {
       if (user == null) {
         Navigator.of(context).pushReplacementNamed(LoadingScreen.routeName);
       }
-    });
+    }).canceledBy(this);
   }
 
   @override
   void dispose() {
-    _sub.cancel();
+    cancelSubscriptions();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return Scaffold(
-      bottomNavigationBar: NavBar(),
-      body: Center(
-        child: Column(
-          children: [
-            TextButton(
-              child: Text("Sign out"),
-              onPressed: () async {
-                await Provider.of<UserProvider>(context, listen: false)
-                    .logout();
-              },
-            ),
-          ],
+    if (Provider.of<UserProvider>(context).currentUser.role != Roles.User)
+      return Scaffold(
+        bottomNavigationBar: NavBar(),
+        body: Body(),
+      );
+    else
+      return Scaffold(
+        body: Center(
+          child: Text('You dont have perms'),
         ),
-      ),
-    );
+      );
   }
 }

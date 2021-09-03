@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:provider/provider.dart';
 
 import '../../size_config.dart';
@@ -20,9 +21,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
     SizeConfig().init(context);
     return ChangeNotifierProvider(
       create: (_) => LoginProvider(),
-      child: Scaffold(
-        backgroundColor: kBackgroundColor,
-        body: Body(),
+      child: KeyboardDismissOnTap(
+        child: Scaffold(
+          backgroundColor: kBackgroundColor,
+          body: Body(),
+        ),
       ),
     );
   }

@@ -18,7 +18,7 @@ class UserProvider extends ChangeNotifier {
   final FirestoreService _db = FirestoreService();
 
   AppUser _currentUser;
-  get currentUser => _currentUser;
+  AppUser get currentUser => _currentUser;
   set currentUser(AppUser user) {
     _currentUser = user;
     notifyListeners();

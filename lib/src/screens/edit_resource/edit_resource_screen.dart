@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:inventory_management/src/widgets/app_bar.dart';
 import '../../providers/edit_resource_provider.dart';
 import '../../styles/colors.dart';
@@ -17,10 +18,12 @@ class EditResourceScreen extends StatelessWidget {
 
     return ChangeNotifierProvider(
       create: (_) => EditResourceProvider(args.resource),
-      child: Scaffold(
-        backgroundColor: kBackgroundColor,
-        body: Body(),
-        appBar: buildAppBar(title: 'Resource Page', context: context),
+      child: KeyboardDismissOnTap(
+        child: Scaffold(
+          backgroundColor: kBackgroundColor,
+          body: Body(),
+          appBar: buildAppBar(title: 'Resource Page', context: context),
+        ),
       ),
     );
   }

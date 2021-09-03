@@ -75,7 +75,7 @@ class NavItem extends StatelessWidget {
       onTap: press,
       child: Container(
         padding: EdgeInsets.all(getProportionateScreenHeight(5)),
-        height: getProportionateScreenHeight(50),
+        height: getProportionateScreenHeight(60),
         width: getProportionateScreenWidth(100),
         child: Column(
           children: [
@@ -83,6 +83,7 @@ class NavItem extends StatelessWidget {
               child: Icon(
                 icon,
                 color: kMainColor,
+                size: getProportionateScreenHeight(30),
               ),
             ),
             Spacer(),

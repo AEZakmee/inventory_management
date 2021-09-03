@@ -64,7 +64,7 @@ class TypeButtonAdd extends StatelessWidget {
         ),
         child: Center(
           child: Text(
-            value.toString(),
+            value < 0 ? value.toString() : '+$value',
             style: TextStyle(
                 color: value < 0 ? kMainColor : kBackgroundColor,
                 fontSize: getProportionateScreenHeight(20),
