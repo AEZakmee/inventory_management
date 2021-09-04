@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:inventory_management/src/screens/edit_resource/components/pass_argument.dart';
-import 'package:inventory_management/src/screens/edit_resource/edit_resource_screen.dart';
-import 'package:inventory_management/src/widgets/app_bar.dart';
+import '../../widgets/pass_argument.dart';
+import '../../screens/edit_resource/edit_resource_screen.dart';
+import '../../widgets/app_bar.dart';
 import '../../providers/resource_provider.dart';
 import '../../styles/colors.dart';
 import 'package:provider/provider.dart';

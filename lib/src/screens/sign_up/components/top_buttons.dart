@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../size_config.dart';
 import '../../../providers/login_provider.dart';
 import '../../../styles/colors.dart';
-import '../../../styles/constans.dart';
+import '../../../widgets/constans.dart';
 
 class ButtonsRow extends StatelessWidget {
   const ButtonsRow({

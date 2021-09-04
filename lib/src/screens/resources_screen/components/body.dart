@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:inventory_management/src/widgets/paddings.dart';
+import 'package:inventory_management/src/widgets/staggered_animations.dart';
 import '../../../model/resource.dart';
 import '../../../providers/user_provider.dart';
 import '../../../screens/resources_screen/components/resource_row.dart';
@@ -18,11 +20,8 @@ class Body extends StatelessWidget {
               );
             }
             return SingleChildScrollView(
-              child: Column(
+              child: StaggeredColumn(
                 children: [
-                  SizedBox(
-                    height: getProportionateScreenHeight(10),
-                  ),
                   ...List.generate(
                     snapshot.data.length,
                     (index) => ResourceRow(

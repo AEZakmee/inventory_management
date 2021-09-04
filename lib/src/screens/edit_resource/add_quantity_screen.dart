@@ -6,7 +6,7 @@ import '../../styles/colors.dart';
 import 'package:provider/provider.dart';
 import '../../size_config.dart';
 import 'components/quantity_body.dart';
-import 'components/pass_argument.dart';
+import '../../widgets/pass_argument.dart';
 
 class EditResourceQuantityScreen extends StatelessWidget {
   static const String routeName = '/edit_resource_quantity';

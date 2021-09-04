@@ -24,7 +24,15 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  List<CartItem> _cart = [];
+  List<CartItem> get cart => _cart;
+  void addToCard({Product product, int quantity}) {
+    _cart.add(CartItem(product: product, quantity: quantity));
+    notifyListeners();
+  }
+
   Stream<List<Resource>> get listResources => _db.getResources();
+  Stream<List<Product>> get listProducts => _db.getProducts();
 
   Future<bool> isLoggedIn() async {
     var firebaseUser = _auth.currentUser;
@@ -40,4 +48,10 @@ class UserProvider extends ChangeNotifier {
     await _auth.signOut();
     _currentUser = null;
   }
+}
+
+class CartItem {
+  Product product;
+  int quantity;
+  CartItem({this.product, this.quantity});
 }

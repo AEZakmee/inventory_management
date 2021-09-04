@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:inventory_management/src/providers/user_provider.dart';
+import '../../widgets/pass_argument.dart';
+import '../../widgets/text_widgets.dart';
 import '../../screens/edit_product/edit_product_screen.dart';
 import '../../widgets/app_bar.dart';
 import '../../styles/colors.dart';
@@ -7,7 +8,6 @@ import '../../providers/products_provider.dart';
 import 'package:provider/provider.dart';
 import '../../size_config.dart';
 import 'components/body.dart';
-import 'components/pass_argument.dart';
 
 class ProductsScreen extends StatefulWidget {
   static const String routeName = '/products';
@@ -35,13 +35,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
             );
           },
           backgroundColor: kMainColorAccent,
-          label: Text(
-            'Add Product',
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: getProportionateScreenHeight(20),
-            ),
-          ),
+          label: buttonText(text: 'Add Product'),
           icon: Icon(
             Icons.add,
             color: kBackgroundColor,

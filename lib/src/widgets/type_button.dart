@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:inventory_management/src/providers/edit_resource_provider.dart';
-import 'package:provider/provider.dart';
 import '../styles/colors.dart';
-import '../styles/constans.dart';
+import 'constans.dart';
 import '../size_config.dart';
 
 class TypeButton extends StatelessWidget {
@@ -45,16 +43,15 @@ class TypeButtonAdd extends StatelessWidget {
   const TypeButtonAdd({
     Key key,
     @required this.value,
+    @required this.onTap,
   }) : super(key: key);
   final int value;
+  final onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Provider.of<EditResourceProvider>(context, listen: false)
-            .addQuantity(value);
-      },
+      onTap: onTap,
       child: Container(
         height: getProportionateScreenHeight(35),
         width: getProportionateScreenWidth(50),

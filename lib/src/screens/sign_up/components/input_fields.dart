@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../../size_config.dart';
 import '../../../styles/colors.dart';
-import '../../../styles/constans.dart';
+import '../../../widgets/constans.dart';
 import '../../../providers/login_provider.dart';
 
 class InputFields extends StatefulWidget {

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 const kBackgroundColor = Colors.white;
 const kTextColor = Color(0xff696969);
 const kTextFocusColor = Colors.black;
-const kErrorColor = Color(0xffb5790d);
+const kErrorColor = Color(0xffff3333);
 
 const kMainColorDark = Color(0xff00004a);
 const kMainColor = Color(0xff192e5b);

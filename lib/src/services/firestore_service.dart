@@ -55,6 +55,19 @@ class FirestoreService {
             snapshot.map((doc) => Resource.fromJson(doc.data())).toList());
   }
 
+  Stream<List<Product>> getProducts() {
+    return _db
+        .collection('products')
+        .snapshots()
+        .map((event) => event.docs)
+        .map((event) => event.map((e) => Product.fromJson(e.data())).toList());
+  }
+
+  Future<List<Product>> getProductsFuture() {
+    return _db.collection('products').get().then(
+        (value) => value.docs.map((e) => Product.fromJson(e.data())).toList());
+  }
+
   Future<bool> _docExists(String collection, String name) async {
     var snapshots = await _db
         .collection(collection)
@@ -81,8 +94,38 @@ class FirestoreService {
         .onError((error, stackTrace) => throw new AddException());
   }
 
-  Future<void> deleteResource(String id) {
-    return _db.collection('resources').doc(id).delete();
+  Future<void> updateResource(Resource resource) {
+    return _db
+        .collection('resources')
+        .doc(resource.uniqueID)
+        .update(resource.toMap())
+        .onError((error, stackTrace) => throw new AddException());
+  }
+
+  Future<void> deleteResource(String id) async {
+    List<Product> products = await getProductsFuture();
+    _db.collection('resources').doc(id).delete();
+    if (products != null) {
+      products.forEach((element) {
+        bool hasElements = false;
+        for (int i = 0; i < element.resources.length; i++) {
+          if (element.resources[i].res.uniqueID == id) {
+            hasElements = true;
+            element.resources[i].isValid = false;
+          }
+        }
+        if (hasElements) {
+          _db
+              .collection('products')
+              .doc(element.uniqueID)
+              .update(element.toMap());
+        }
+      });
+    }
+  }
+
+  Future<void> deleteProduct(String id) {
+    return _db.collection('products').doc(id).delete();
   }
 
   Future<void> addProduct(Product product) {
@@ -90,6 +133,14 @@ class FirestoreService {
         .collection('products')
         .doc(product.uniqueID)
         .set(product.toMap())
+        .onError((error, stackTrace) => throw new AddException());
+  }
+
+  Future<void> updateProduct(Product product) {
+    return _db
+        .collection('products')
+        .doc(product.uniqueID)
+        .update(product.toMap())
         .onError((error, stackTrace) => throw new AddException());
   }
 }

@@ -21,6 +21,7 @@ class EditResourceProvider extends ChangeNotifier {
     }
   }
   Resource _resource;
+  get resource => _resource;
   set resource(value) {
     _resource = value;
     nameController.text = _resource.name;
@@ -42,7 +43,7 @@ class EditResourceProvider extends ChangeNotifier {
   bool _showErrorsString = false;
   get showErrorsString => _showErrorsString;
   String _errorsString = "";
-  get errorsString => _errorsString;
+  String get errorsString => _errorsString;
   void setError({bool value, String error = ""}) {
     _errorsString = error;
     _showErrorsString = value;
@@ -80,28 +81,30 @@ class EditResourceProvider extends ChangeNotifier {
           setError(value: true, error: "Product with that name already exists");
           return false;
         } else {
-          await _db.addResource(newRes);
+          _db.addResource(newRes);
           return true;
         }
       } else {
-        await _db.addResource(_resource);
+        _db.updateResource(_resource);
         return true;
       }
     } on AddException catch (e) {
       setError(value: true, error: e.errMsg());
       return false;
     }
-    return false;
   }
 
   //User input handle;
   bool _nameHasError = false;
-  set nameHasError(value) {
+  void setNameHasError(value, int type) {
     if (_nameHasError != value) {
       _nameHasError = value;
+      errorType = type;
       notifyListeners();
     }
   }
+
+  int errorType = 0;
 
   bool _quantityHasError = false;
   set quantityHasError(value) {
@@ -115,10 +118,14 @@ class EditResourceProvider extends ChangeNotifier {
     setError(value: false);
     switch (field) {
       case ResourceField.Name:
-        nameHasError = false;
+        print("here");
+        setNameHasError(false, 0);
         _resource.name = data;
         if (data.isEmpty) {
-          nameHasError = true;
+          setNameHasError(true, 0);
+        }
+        if (data.length > 12) {
+          setNameHasError(true, 1);
         }
         return;
       case ResourceField.Quantity:
@@ -146,6 +153,10 @@ class EditResourceProvider extends ChangeNotifier {
   String getError(ResourceField field) {
     switch (field) {
       case ResourceField.Name:
+        if (errorType == 0)
+          return "Enter a resource name";
+        else if (errorType == 1)
+          return "Name should be less than 13 characters";
         return "Enter a valid name";
       case ResourceField.Quantity:
         return "Enter a valid quantity";

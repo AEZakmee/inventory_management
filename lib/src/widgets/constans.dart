@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import '../size_config.dart';
-import 'colors.dart';
+import '../styles/colors.dart';
 
 final kBorderRadius = BorderRadius.circular(15);
 final kBorderRadiusLite = BorderRadius.circular(5);
@@ -67,12 +65,3 @@ final kErrorOutlineBorderAdd = OutlineInputBorder(
   borderRadius: kInputFiledBorderRadiusAdd,
   borderSide: BorderSide(color: kErrorColor),
 );
-
-kLongToast(String message) => Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.CENTER,
-      backgroundColor: Colors.white60,
-      textColor: kMainColor,
-      fontSize: getProportionateScreenHeight(20),
-    );

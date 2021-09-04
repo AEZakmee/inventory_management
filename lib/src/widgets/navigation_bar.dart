@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:inventory_management/src/model/resource.dart';
 import 'package:inventory_management/src/providers/user_provider.dart';
 import 'package:inventory_management/src/screens/edit_product/edit_product_screen.dart';
-import 'package:inventory_management/src/screens/edit_resource/components/pass_argument.dart';
+import 'file:///D:/AProjects/inventory_management/lib/src/widgets/pass_argument.dart';
 import 'package:inventory_management/src/screens/edit_resource/edit_resource_screen.dart';
 import 'package:inventory_management/src/screens/products/products_screen.dart';
 import 'package:inventory_management/src/screens/resources_screen/resources_screen.dart';
 import 'package:inventory_management/src/styles/colors.dart';
-import 'package:inventory_management/src/styles/constans.dart';
+import 'file:///D:/AProjects/inventory_management/lib/src/widgets/constans.dart';
 import 'package:provider/provider.dart';
 
 import '../size_config.dart';

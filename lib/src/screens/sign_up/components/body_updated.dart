@@ -8,7 +8,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:provider/provider.dart';
 import '../../../size_config.dart';
 import '../../../styles/colors.dart';
-import '../../../styles/constans.dart';
+import '../../../widgets/constans.dart';
 import '../../../providers/login_provider.dart';
 import 'arrow_button.dart';
 import 'input_fields.dart';

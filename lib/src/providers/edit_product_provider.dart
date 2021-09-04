@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:inventory_management/src/model/resource.dart';
-import 'package:inventory_management/src/providers/user_provider.dart';
+import '../model/resource.dart';
+import '../providers/user_provider.dart';
 import '../services/firestore_service.dart';
 import 'package:uuid/uuid.dart';
 import '../model/product.dart';
@@ -43,7 +43,8 @@ class EditProductProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool get hasErrors => _nameHasError || _product.resources.isEmpty;
+  bool get hasErrors =>
+      _nameHasError || _product.name.isEmpty || _product.resources.isEmpty;
 
   bool _nameHasError = false;
   set nameHasError(value) {
@@ -66,7 +67,6 @@ class EditProductProvider extends ChangeNotifier {
     setError(value: false);
     switch (field) {
       case ProductField.Name:
-        print(data);
         nameHasError = false;
         _product.name = data;
         if (data.isEmpty) {
@@ -117,34 +117,34 @@ class EditProductProvider extends ChangeNotifier {
       ? _resourcesList.map<DropdownMenuItem<Resource>>((value) {
           return DropdownMenuItem<Resource>(
             value: value,
-            child: Text(_reformatResourceString(value.name)),
+            child: Text(value.name),
           );
         }).toList()
       : null;
-  String _reformatResourceString(String value) {
-    return value.length > 13 ? value.substring(0, 13) + '...' : value;
-  }
 
   void _loadResources() async {
     _resourcesList = await UserProvider().listResources.first;
     notifyListeners();
   }
 
-  List<ItemQuantity> get resources {
-    var returnable = _product.resources;
-    returnable.forEach((e) => e.res.name = _reformatResourceString(e.res.name));
-    return returnable;
+  List<ItemQuantity> get resources => _product.resources;
+
+  void deleteResource(index) {
+    _product.resources.removeAt(index);
+    notifyListeners();
   }
 
-  void appendResource() {
-    if (_selectedResource != null && !_quantityHasError) {
+  bool appendResource() {
+    if (_selectedResource != null && !_quantityHasError && _quantity != 0) {
       if (!_product.resources
           .map((e) => e.res.uniqueID)
           .contains(_selectedResource.uniqueID)) {
         var newItem = ItemQuantity(isValid: true, res: _selectedResource);
         newItem.res.quantity = _quantity;
-        _product.resources.add(newItem);
         quantityController.text = "";
+        _quantity = 0;
+        _product.resources.insert(0, newItem);
+        return true;
       } else {
         _product.resources
             .where(
@@ -153,8 +153,10 @@ class EditProductProvider extends ChangeNotifier {
             .res
             .quantity = _quantity;
       }
+    } else {
+      quantityHasError = true;
     }
-    notifyListeners();
+    return false;
   }
 
   Future<bool> saveProduct() async {
@@ -176,18 +178,17 @@ class EditProductProvider extends ChangeNotifier {
           setError(value: true, error: "Product with that name already exists");
           return false;
         } else {
-          await _db.addProduct(newProd);
+          _db.addProduct(newProd);
           return true;
         }
       } else {
-        await _db.addProduct(_product);
+        _db.updateProduct(_product);
         return true;
       }
     } on AddException catch (e) {
       setError(value: true, error: e.errMsg());
       return false;
     }
-    return false;
   }
 }
 

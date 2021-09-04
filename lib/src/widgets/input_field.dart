@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
-import '../../../providers/edit_resource_provider.dart';
-import '../../../styles/colors.dart';
-import '../../../styles/constans.dart';
-import 'package:provider/provider.dart';
-import '../../../size_config.dart';
+import '../styles/colors.dart';
+import 'constans.dart';
+import '../size_config.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
     Key key,
-    this.textController,
-    @required this.field,
+    @required this.textController,
     this.hintText = "",
     this.label,
-    @required this.prov,
+    @required this.onChanged,
+    @required this.hasError,
+    @required this.errorString,
   }) : super(key: key);
   final textController;
-  final field;
   final String hintText;
   final String label;
-  final prov;
+  final bool hasError;
+  final String errorString;
+  final Function onChanged;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -34,16 +34,16 @@ class CustomTextField extends StatelessWidget {
                 bottom: getProportionateScreenHeight(3),
               ),
               child: Text(
-                prov.hasError(field) ? prov.getError(field) : label,
+                hasError ? errorString : label,
                 style: TextStyle(
-                  color: prov.hasError(field) ? kErrorColor : kMainColor,
+                  color: hasError ? kErrorColor : kMainColor,
                   fontSize: getProportionateScreenHeight(17),
                 ),
               ),
             ),
           TextField(
             controller: textController,
-            onChanged: (value) => prov.setData(value, field),
+            onChanged: (v) => onChanged(v),
             showCursor: true,
             cursorColor: kMainColor,
             style: TextStyle(
@@ -59,12 +59,10 @@ class CustomTextField extends StatelessWidget {
               contentPadding: EdgeInsets.only(
                 left: getProportionateScreenWidth(10),
               ),
-              enabledBorder: prov.hasError(field)
-                  ? kErrorOutlineBorderAdd
-                  : kOutlineBorderAdd,
-              focusedBorder: prov.hasError(field)
-                  ? kErrorOutlineBorderAdd
-                  : kEnabledOutlineBorderAdd,
+              enabledBorder:
+                  hasError ? kErrorOutlineBorderAdd : kOutlineBorderAdd,
+              focusedBorder:
+                  hasError ? kErrorOutlineBorderAdd : kEnabledOutlineBorderAdd,
             ),
           ),
         ],

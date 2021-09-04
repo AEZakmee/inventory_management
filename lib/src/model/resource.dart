@@ -3,8 +3,10 @@ class Resource {
   String name;
   ResourceType type;
   double quantity;
+  double totalUsed;
 
-  Resource({this.uniqueID, this.name, this.type, this.quantity});
+  Resource(
+      {this.uniqueID, this.name, this.type, this.quantity, this.totalUsed = 0});
 
   factory Resource.fromJson(Map<String, dynamic> json) {
     return Resource(
@@ -12,6 +14,7 @@ class Resource {
       name: json['name'],
       type: ResourceType.values[json['type']],
       quantity: json['quantity'],
+      totalUsed: json['totalUsed'],
     );
   }
 
@@ -21,6 +24,7 @@ class Resource {
       'name': name,
       'type': type.index,
       'quantity': quantity,
+      'totalUsed': totalUsed,
     };
   }
 }
