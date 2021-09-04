@@ -30,10 +30,10 @@ class _BodyState extends State<Body> {
             child: Column(
               children: [
                 mediumPadding(),
-                headlineText(
-                    text: prov.isEdit
-                        ? "Update resource data"
-                        : "Enter resource data"),
+                Text(
+                  prov.isEdit ? "Update resource data" : "Enter resource data",
+                  style: Theme.of(context).textTheme.headline4,
+                ),
                 CustomTextField(
                   textController: prov.nameController,
                   hintText: "Enter resource name",
@@ -72,7 +72,7 @@ class _BodyState extends State<Body> {
                     padding: EdgeInsets.only(
                       top: kMiniPadding,
                     ),
-                    child: editItemErrorText(text: prov.errorsString),
+                    child: editItemErrorText(prov.errorsString, context),
                   ),
                 smallPadding(),
                 LoadingButtonCustom(
@@ -81,7 +81,7 @@ class _BodyState extends State<Body> {
                   onPressed: () async {
                     bool success = await prov.saveProduct();
                     if (success) {
-                      kLongToast('Product Saved');
+                      kLongToast('Product Saved', context);
                       Navigator.of(context).pop();
                     }
                     _btnController.reset();

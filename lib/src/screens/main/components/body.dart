@@ -7,16 +7,13 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Column(
-          children: [
-            TextButton(
-              child: Text("Sign out"),
-              onPressed: () async {
-                await Provider.of<UserProvider>(context, listen: false)
-                    .logout();
-              },
-            ),
-          ],
+        child: Center(
+          child: TextButton(
+            child: Text("Sign out"),
+            onPressed: () async {
+              await Provider.of<UserProvider>(context, listen: false).logout();
+            },
+          ),
         ),
       ),
     );

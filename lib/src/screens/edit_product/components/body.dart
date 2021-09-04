@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'resourceRows.dart';
-import '../../../styles/colors.dart';
 import '../../../widgets/input_field.dart';
 import '../../../widgets/loading_button.dart';
 import '../../../widgets/paddings.dart';
@@ -32,10 +31,10 @@ class _BodyState extends State<Body> {
               child: Column(
                 children: [
                   mediumPadding(),
-                  headlineText(
-                      text: prov.isEdit
-                          ? "Update product data"
-                          : "Enter product data"),
+                  Text(
+                    prov.isEdit ? "Update product data" : "Enter product data",
+                    style: Theme.of(context).textTheme.headline4,
+                  ),
                   CustomTextField(
                     textController: prov.nameController,
                     hintText: "Enter resource name",
@@ -55,7 +54,7 @@ class _BodyState extends State<Body> {
                       padding: EdgeInsets.only(
                         top: getProportionateScreenHeight(5),
                       ),
-                      child: editItemErrorText(text: prov.errorsString),
+                      child: editItemErrorText(prov.errorsString, context),
                     ),
                   smallPadding(),
                   LoadingButtonCustom(
@@ -63,7 +62,7 @@ class _BodyState extends State<Body> {
                     onPressed: () async {
                       bool success = await prov.saveProduct();
                       if (success) {
-                        kLongToast('Product Saved');
+                        kLongToast('Product Saved', context);
                         Navigator.of(context).pop();
                       }
                       _btnController.reset();

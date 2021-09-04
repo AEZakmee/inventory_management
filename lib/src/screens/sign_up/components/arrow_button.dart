@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
-
 import '../../../size_config.dart';
-import '../../../styles/colors.dart';
 import '../../../widgets/constans.dart';
 import '../../../providers/login_provider.dart';
 
@@ -27,9 +25,9 @@ class ArrowButtonBackground extends StatelessWidget {
           height: getProportionateScreenHeight(105),
           width: getProportionateScreenHeight(105),
           decoration: BoxDecoration(
-            color: kBackgroundColor,
+            color: Theme.of(context).backgroundColor,
             shape: BoxShape.circle,
-            boxShadow: [if (hasShadow) kBoxShadow],
+            boxShadow: [if (hasShadow) kBoxShadow(context)],
           ),
           child: Padding(
             padding: EdgeInsets.all(
@@ -55,20 +53,19 @@ class ArrowButton extends StatelessWidget {
       onTap: onPress,
       child: Container(
         decoration: BoxDecoration(
-          gradient: kArrowButtonGradient,
-          boxShadow: [kBoxShadow],
+          gradient: kArrowButtonGradient(context),
+          boxShadow: [kBoxShadow(context)],
           shape: BoxShape.circle,
         ),
         child: !Provider.of<LoginProvider>(context).isLoading
             ? Icon(
                 Icons.arrow_forward,
-                color: kBackgroundColor,
                 size: getProportionateScreenHeight(40),
               )
             : Padding(
                 padding: EdgeInsets.all(getProportionateScreenHeight(10)),
                 child: SpinKitFadingCircle(
-                  color: kBackgroundColor,
+                  color: Theme.of(context).backgroundColor,
                 ),
               ),
       ),

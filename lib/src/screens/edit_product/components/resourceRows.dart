@@ -4,7 +4,6 @@ import 'package:inventory_management/src/widgets/loading_button.dart';
 import 'package:inventory_management/src/widgets/utilities.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import '../../../model/resource.dart';
-import '../../../styles/colors.dart';
 import '../../../widgets/constans.dart';
 import '../../../widgets/input_field.dart';
 import '../../../widgets/paddings.dart';
@@ -83,7 +82,6 @@ class _PickedResourcesLVState extends State<PickedResourcesLV> {
               context: context);
         },
         child: Card(
-          color: item.isValid ? kMainColorLight : kErrorColor,
           elevation: 4,
           child: Padding(
             padding: EdgeInsets.all(
@@ -98,21 +96,16 @@ class _PickedResourcesLVState extends State<PickedResourcesLV> {
                     scrollDirection: Axis.horizontal,
                     child: Text(
                       item.res.name,
-                      style: TextStyle(
-                        color: kMainColor,
-                        fontWeight: FontWeight.w400,
-                        fontSize: getProportionateScreenWidth(16),
-                      ),
+                      style: Theme.of(context).textTheme.bodyText1,
                     ),
                   ),
                 ),
                 Spacer(),
                 Text(
                   getQuantityTypeString(item.res),
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: getProportionateScreenWidth(10),
-                  ),
+                  style: Theme.of(context).textTheme.bodyText1.copyWith(
+                        fontSize: getProportionateScreenWidth(9),
+                      ),
                 ),
               ],
             ),
@@ -137,7 +130,7 @@ class AddResourceRow extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: kBorderRadiusLite,
-                  border: Border.all(color: kMainColorAccent),
+                  border: Border.all(color: Theme.of(context).accentColor),
                 ),
                 child: Padding(
                   padding: EdgeInsets.symmetric(
@@ -151,7 +144,7 @@ class AddResourceRow extends StatelessWidget {
                       iconSize: getProportionateScreenWidth(25),
                       elevation: 16,
                       style: TextStyle(
-                        color: kMainColor,
+                        color: Theme.of(context).primaryColor,
                         fontSize: getProportionateScreenWidth(17),
                       ),
                       onChanged: (Resource newValue) {

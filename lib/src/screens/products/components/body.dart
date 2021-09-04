@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:inventory_management/src/model/product.dart';
-import 'package:inventory_management/src/providers/products_provider.dart';
-import 'package:inventory_management/src/providers/user_provider.dart';
-import 'package:inventory_management/src/screens/edit_product/edit_product_screen.dart';
-
-import 'package:inventory_management/src/size_config.dart';
-import 'package:inventory_management/src/styles/colors.dart';
-import 'package:inventory_management/src/widgets/constans.dart';
-import 'package:inventory_management/src/widgets/pass_argument.dart';
-import 'package:inventory_management/src/widgets/type_button.dart';
-import 'package:inventory_management/src/widgets/utilities.dart';
+import '../../../model/product.dart';
+import '../../../providers/products_provider.dart';
+import '../../../providers/user_provider.dart';
+import '../../../screens/edit_product/edit_product_screen.dart';
+import '../../../size_config.dart';
+import '../../../widgets/constans.dart';
+import '../../../widgets/pass_argument.dart';
+import '../../../widgets/utilities.dart';
 import 'package:provider/provider.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -75,9 +71,9 @@ class ProductContainer extends StatelessWidget {
       child: Container(
         width: getProportionateScreenWidth(165),
         decoration: BoxDecoration(
-          color: kBackgroundColor,
+          color: Theme.of(context).backgroundColor,
           borderRadius: kBorderRadiusLite,
-          boxShadow: [kBoxShadowLite],
+          boxShadow: [kBoxShadowLite(context)],
         ),
         child: Padding(
           padding: EdgeInsets.symmetric(
@@ -94,7 +90,7 @@ class ProductContainer extends StatelessWidget {
                 style: TextStyle(
                   fontSize: getProportionateScreenWidth(20),
                   fontWeight: FontWeight.bold,
-                  color: kMainColor,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
               SizedBox(
@@ -107,7 +103,6 @@ class ProductContainer extends StatelessWidget {
                     style: TextStyle(
                       fontSize: getProportionateScreenWidth(14),
                       fontWeight: FontWeight.w300,
-                      color: kTextColor,
                     ),
                   ),
                   Spacer(),
@@ -127,7 +122,7 @@ class ProductContainer extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   IconButton(
-                    color: kMainColor,
+                    color: Theme.of(context).primaryColor,
                     icon: Icon(Icons.edit),
                     iconSize: getProportionateScreenHeight(35),
                     onPressed: () {
@@ -153,7 +148,7 @@ class ProductContainer extends StatelessWidget {
         Text(
           itemQuantity.res.name,
           style: TextStyle(
-            color: isValid ? kMainColorAccent : kErrorColor,
+            color: Colors.red,
           ),
         ),
         Spacer(),
@@ -161,7 +156,7 @@ class ProductContainer extends StatelessWidget {
           itemQuantity.res.quantity.toString() +
               (itemQuantity.res.type.index == 0 ? ' L' : ' Kg'),
           style: TextStyle(
-            color: isValid ? kMainColorAccent : kErrorColor,
+            color: Colors.red,
             fontSize: getProportionateScreenWidth(11),
           ),
         ),

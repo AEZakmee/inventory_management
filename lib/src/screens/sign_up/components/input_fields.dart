@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:provider/provider.dart';
-
 import '../../../size_config.dart';
-import '../../../styles/colors.dart';
 import '../../../widgets/constans.dart';
 import '../../../providers/login_provider.dart';
 
@@ -95,47 +93,21 @@ class LoginInputField extends StatelessWidget {
         child: TextField(
           obscureText: isPassword,
           showCursor: true,
-          cursorColor: kMainColor,
-          style: TextStyle(
-            color: kMainColor,
-            fontSize: getProportionateScreenHeight(18),
-          ),
           onChanged: (String data) => prov.changeData(dataField, data),
           keyboardType:
               isEmail ? TextInputType.emailAddress : TextInputType.text,
           decoration: InputDecoration(
             labelText: label,
-            labelStyle: TextStyle(
-              color: kMainColor,
-              fontSize: getProportionateScreenHeight(18),
-            ),
             prefixIcon: Icon(
               icon,
-              color: kMainColor,
+              color: Theme.of(context).primaryColor,
             ),
-            enabledBorder: kOutlineBorder,
-            focusedBorder: kEnabledOutlineBorder,
             errorText: prov.buttonPressed
                 ? prov.hasError(dataField)
                     ? prov.getErrorMessage(dataField)
                     : null
                 : null,
-            errorBorder: kErrorOutlineBorder,
-            focusedErrorBorder: kErrorOutlineBorder,
             hintText: hintText,
-            contentPadding: EdgeInsets.all(
-              getProportionateScreenHeight(10),
-            ),
-            errorStyle: TextStyle(
-              fontSize: getProportionateScreenHeight(14),
-              color: kErrorColor,
-              fontWeight: FontWeight.w500,
-              height: 0.8,
-            ),
-            hintStyle: TextStyle(
-              fontSize: getProportionateScreenHeight(18),
-              color: kTextColor,
-            ),
           ),
         ),
       );

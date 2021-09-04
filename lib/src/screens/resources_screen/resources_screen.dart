@@ -3,7 +3,6 @@ import '../../widgets/pass_argument.dart';
 import '../../screens/edit_resource/edit_resource_screen.dart';
 import '../../widgets/app_bar.dart';
 import '../../providers/resource_provider.dart';
-import '../../styles/colors.dart';
 import 'package:provider/provider.dart';
 import '../../size_config.dart';
 import 'components/body.dart';
@@ -22,7 +21,6 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
     return ChangeNotifierProvider(
       create: (_) => ResourceProvider(),
       child: Scaffold(
-        backgroundColor: kBackgroundColor,
         body: Body(),
         appBar: buildAppBar(context: context, title: 'Resources'),
         floatingActionButton: FloatingActionButton.extended(
@@ -33,17 +31,11 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
               arguments: ScreenArgumentsResource(null),
             );
           },
-          backgroundColor: kMainColorAccent,
           label: Text(
             'Add Resource',
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: getProportionateScreenHeight(20),
-            ),
           ),
           icon: Icon(
             Icons.add,
-            color: kBackgroundColor,
             size: getProportionateScreenHeight(30),
           ),
         ),

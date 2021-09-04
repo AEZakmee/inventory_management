@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../widgets/paddings.dart';
-import '../../../widgets/text_widgets.dart';
 import '../../../widgets/utilities.dart';
 import '../../../widgets/type_button.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -30,7 +29,8 @@ class _BodyState extends State<Body> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 mediumPadding(),
-                headlineText(text: 'Update quantity'),
+                Text('Update quantity',
+                    style: Theme.of(context).textTheme.headline4),
                 bigPadding(),
                 CustomTextField(
                   textController: prov.quantityController,
@@ -80,7 +80,7 @@ class _BodyState extends State<Body> {
                     onPressed: () async {
                       bool success = await prov.saveProduct();
                       if (success) {
-                        kLongToast('Product Saved');
+                        kLongToast('Product Saved', context);
                         Navigator.of(context).pop();
                       }
                       _btnController.reset();

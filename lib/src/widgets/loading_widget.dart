@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'constans.dart';
-import '../styles/colors.dart';
 import '../size_config.dart';
 
 class LoadingErrorWidget extends StatelessWidget {
@@ -12,7 +11,7 @@ class LoadingErrorWidget extends StatelessWidget {
           Text(
             "Error loading data",
             style: TextStyle(
-              color: kErrorColor,
+              color: Theme.of(context).errorColor,
               fontSize: getProportionateScreenHeight(30),
             ),
           ),

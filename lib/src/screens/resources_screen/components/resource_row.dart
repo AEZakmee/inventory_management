@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:inventory_management/src/widgets/paddings.dart';
-import 'package:inventory_management/src/widgets/utilities.dart';
+import '../../../widgets/paddings.dart';
+import '../../../widgets/utilities.dart';
 import '../../../screens/edit_resource/add_quantity_screen.dart';
 import '../../../model/resource.dart';
 import '../../../providers/resource_provider.dart';
 import '../../../widgets/pass_argument.dart';
 import '../../../screens/edit_resource/edit_resource_screen.dart';
-import '../../../styles/colors.dart';
 import '../../../widgets/constans.dart';
 import 'package:provider/provider.dart';
 
@@ -26,22 +24,22 @@ class ResourceRow extends StatelessWidget {
         actionExtentRatio: 0.30,
         child: Container(
           width: double.infinity,
-          height: 100,
+          height: getProportionateScreenHeight(100),
           decoration: BoxDecoration(
-            color: kBackgroundColor,
-            boxShadow: [kBoxShadowLite],
+            color: Theme.of(context).cardColor,
+            boxShadow: [kBoxShadowLite(context)],
           ),
         ),
         actions: <Widget>[
           IconSlideAction(
             caption: 'Add to Favorites',
-            color: kSecondaryColorAccent,
+            color: Theme.of(context).accentColor,
             icon: Icons.star,
             onTap: () => null,
           ),
           IconSlideAction(
             caption: 'Top up',
-            color: kSecondaryColor,
+            color: Theme.of(context).secondaryHeaderColor,
             icon: Icons.add,
             onTap: () => Navigator.pushNamed(
               context,
@@ -53,7 +51,7 @@ class ResourceRow extends StatelessWidget {
         secondaryActions: <Widget>[
           IconSlideAction(
             caption: 'Edit',
-            color: kMainColorLight,
+            color: Theme.of(context).primaryColorLight,
             icon: Icons.edit,
             onTap: () => Navigator.pushNamed(
               context,
@@ -63,7 +61,7 @@ class ResourceRow extends StatelessWidget {
           ),
           IconSlideAction(
             caption: 'Delete',
-            color: kMainColorAccent,
+            color: Theme.of(context).primaryColor,
             icon: Icons.delete,
             onTap: () => kDeletePopup(
               context: context,

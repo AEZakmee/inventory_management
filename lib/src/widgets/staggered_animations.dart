@@ -13,7 +13,7 @@ class StaggeredListView extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           return AnimationConfiguration.staggeredList(
             position: index,
-            duration: const Duration(milliseconds: 375),
+            duration: const Duration(milliseconds: 500),
             child: SlideAnimation(
               verticalOffset: 50.0,
               child: FadeInAnimation(

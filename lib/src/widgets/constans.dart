@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import '../styles/colors.dart';
 
-final kBorderRadius = BorderRadius.circular(15);
+final kBorderRadius = BorderRadius.circular(5);
 final kBorderRadiusLite = BorderRadius.circular(5);
 final kInputFiledBorderRadius = BorderRadius.circular(35);
 final kInputFiledBorderRadiusAdd = BorderRadius.circular(5);
@@ -10,58 +9,50 @@ final kAnimTypeLogin = Curves.easeIn;
 final kAnimDurationLogin = Duration(milliseconds: 400);
 
 //Box decorations
-final kBoxShadowLite = BoxShadow(
-  color: Colors.black.withOpacity(0.2),
-  blurRadius: 5,
-  spreadRadius: 2,
-);
-final kBoxShadow = BoxShadow(
-  color: Colors.black.withOpacity(0.3),
-  blurRadius: 15,
-  spreadRadius: 5,
-);
-final kBoxDecoration = BoxDecoration(
-  color: kBackgroundColor,
-  borderRadius: kBorderRadius,
-  boxShadow: [kBoxShadow],
-);
-
-//Text decorations
-final kLoginClickedButtonStyle = TextStyle(
-  fontSize: 21,
-  fontWeight: FontWeight.bold,
-  color: kMainColor,
-);
-final kLoginButtonStyle = TextStyle(
-  fontSize: 21,
-  fontWeight: FontWeight.bold,
-  color: kTextColor,
-);
-
-//Text field decorations
-final kOutlineBorder = OutlineInputBorder(
-  borderRadius: kInputFiledBorderRadius,
-  borderSide: BorderSide(color: kMainColorAccent),
-);
-final kErrorOutlineBorder = OutlineInputBorder(
-  borderRadius: kInputFiledBorderRadius,
-  borderSide: BorderSide(color: kErrorColor),
-);
-final kEnabledOutlineBorder = OutlineInputBorder(
-  borderRadius: kInputFiledBorderRadius,
-  borderSide: BorderSide(color: kMainColor),
-);
+kBoxShadowLite(context) => BoxShadow(
+      color: Theme.of(context).shadowColor.withOpacity(0.2),
+      blurRadius: 5,
+      spreadRadius: 2,
+    );
+kBoxShadow(context) => BoxShadow(
+      color: Theme.of(context).shadowColor.withOpacity(0.5),
+      blurRadius: 15,
+      spreadRadius: 5,
+    );
+kBoxDecoration(context) => BoxDecoration(
+      color: Theme.of(context).backgroundColor,
+      borderRadius: kBorderRadius,
+      boxShadow: [kBoxShadow(context)],
+    );
 
 //Add products page
-final kOutlineBorderAdd = OutlineInputBorder(
-  borderRadius: kInputFiledBorderRadiusAdd,
-  borderSide: BorderSide(color: kMainColorAccent),
-);
-final kEnabledOutlineBorderAdd = OutlineInputBorder(
-  borderRadius: kInputFiledBorderRadiusAdd,
-  borderSide: BorderSide(color: kMainColor),
-);
-final kErrorOutlineBorderAdd = OutlineInputBorder(
-  borderRadius: kInputFiledBorderRadiusAdd,
-  borderSide: BorderSide(color: kErrorColor),
-);
+kOutlineBorderAdd(context) => OutlineInputBorder(
+      borderRadius: kInputFiledBorderRadiusAdd,
+      borderSide: BorderSide(color: Theme.of(context).accentColor),
+    );
+kEnabledOutlineBorderAdd(context) => OutlineInputBorder(
+      borderRadius: kInputFiledBorderRadiusAdd,
+      borderSide: BorderSide(color: Theme.of(context).primaryColor),
+    );
+kErrorOutlineBorderAdd(context) => OutlineInputBorder(
+      borderRadius: kInputFiledBorderRadiusAdd,
+      borderSide: BorderSide(color: Theme.of(context).errorColor),
+    );
+
+kLoginBackgroundGradient(context) => LinearGradient(
+      colors: [
+        Theme.of(context).accentColor,
+        Theme.of(context).primaryColorDark
+      ],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    );
+
+kArrowButtonGradient(context) => LinearGradient(
+      colors: [
+        Theme.of(context).primaryColor,
+        Theme.of(context).secondaryHeaderColor
+      ],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    );

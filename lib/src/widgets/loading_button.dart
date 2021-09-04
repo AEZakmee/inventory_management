@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../styles/colors.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import '../size_config.dart';
 
@@ -17,13 +16,9 @@ class LoadingButtonCustom extends StatelessWidget {
       onPressed: onPressed,
       width: SizeConfig.screenWidth - getProportionateScreenWidth(60),
       borderRadius: getProportionateScreenHeight(5),
-      color: kMainColor,
+      color: Theme.of(context).buttonColor,
       child: Text(
         text,
-        style: TextStyle(
-          color: kBackgroundColor,
-          fontSize: getProportionateScreenHeight(20),
-        ),
       ),
     );
   }

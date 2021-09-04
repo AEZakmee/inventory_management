@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../../size_config.dart';
 import '../../../providers/login_provider.dart';
-import '../../../styles/colors.dart';
 import '../../../widgets/constans.dart';
 
 class ButtonsRow extends StatelessWidget {
@@ -57,8 +55,15 @@ class RowButton extends StatelessWidget {
         children: [
           Text(
             buttonText,
-            style:
-                isSelectedButton ? kLoginClickedButtonStyle : kLoginButtonStyle,
+            style: isSelectedButton
+                ? Theme.of(context)
+                    .textTheme
+                    .headline6
+                    .copyWith(color: Theme.of(context).buttonColor)
+                : Theme.of(context)
+                    .textTheme
+                    .headline6
+                    .copyWith(color: Theme.of(context).disabledColor),
           ),
           AnimatedContainer(
             duration: kAnimDurationLogin,
@@ -66,7 +71,7 @@ class RowButton extends StatelessWidget {
             margin: EdgeInsets.only(top: 3),
             height: 2,
             width: isSelectedButton ? getProportionateScreenWidth(60) : 0,
-            color: kTertiaryColorAccent,
+            color: Theme.of(context).accentColor,
           )
         ],
       ),

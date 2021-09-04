@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../styles/colors.dart';
 import 'constans.dart';
 import '../size_config.dart';
 
@@ -22,15 +21,19 @@ class TypeButton extends StatelessWidget {
         height: getProportionateScreenHeight(35),
         width: getProportionateScreenWidth(150),
         decoration: BoxDecoration(
-          color: isClicked ? kMainColor : kMainColorLight,
+          color: isClicked
+              ? Theme.of(context).buttonColor
+              : Theme.of(context).disabledColor,
           borderRadius: kInputFiledBorderRadiusAdd,
         ),
         child: Center(
           child: Text(
             text,
             style: TextStyle(
-              color: isClicked ? kBackgroundColor : kMainColor,
-              fontSize: getProportionateScreenHeight(20),
+              color: isClicked
+                  ? Theme.of(context).buttonTheme.colorScheme.onPrimary
+                  : Theme.of(context).buttonTheme.colorScheme.onBackground,
+              fontSize: getProportionateScreenHeight(18),
             ),
           ),
         ),
@@ -56,14 +59,18 @@ class TypeButtonAdd extends StatelessWidget {
         height: getProportionateScreenHeight(35),
         width: getProportionateScreenWidth(50),
         decoration: BoxDecoration(
-          color: value < 0 ? kMainColorLight : kMainColorAccent,
+          color: value < 0
+              ? Theme.of(context).accentColor
+              : Theme.of(context).primaryColorLight,
           borderRadius: kInputFiledBorderRadiusAdd,
         ),
         child: Center(
           child: Text(
             value < 0 ? value.toString() : '+$value',
             style: TextStyle(
-                color: value < 0 ? kMainColor : kBackgroundColor,
+                color: value < 0
+                    ? Theme.of(context).buttonTheme.colorScheme.onPrimary
+                    : Theme.of(context).buttonTheme.colorScheme.onBackground,
                 fontSize: getProportionateScreenHeight(20),
                 fontWeight: FontWeight.bold),
           ),

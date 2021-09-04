@@ -1,13 +1,10 @@
 import 'dart:async';
-
-import 'package:flutter/animation.dart';
-
+import '../../../widgets/text_widgets.dart';
 import '../../loading/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:provider/provider.dart';
 import '../../../size_config.dart';
-import '../../../styles/colors.dart';
 import '../../../widgets/constans.dart';
 import '../../../providers/login_provider.dart';
 import 'arrow_button.dart';
@@ -55,7 +52,7 @@ class _BodyState extends State<Body> {
               curve: kAnimTypeLogin,
               height: getProportionateScreenHeight(prov.overallPosition + 180),
               decoration: BoxDecoration(
-                gradient: kLoginBackgroundGradient,
+                gradient: kLoginBackgroundGradient(context),
               ),
             ),
           ),
@@ -85,7 +82,7 @@ class _BodyState extends State<Body> {
                       AnimatedContainer(
                         duration: kAnimDurationLogin,
                         curve: kAnimTypeLogin,
-                        decoration: kBoxDecoration,
+                        decoration: kBoxDecoration(context),
                         child: Padding(
                           padding: EdgeInsets.symmetric(
                             horizontal: getProportionateScreenWidth(20),
@@ -96,15 +93,8 @@ class _BodyState extends State<Body> {
                               InputFields(),
                               if (prov.hasAuthError)
                                 Center(
-                                  child: Text(
-                                    prov.authErrorString,
-                                    style: TextStyle(
-                                      color: kErrorColor,
-                                      fontSize:
-                                          getProportionateScreenHeight(15),
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
+                                  child: editItemErrorText(
+                                      prov.authErrorString, context),
                                 ),
                               SizedBox(
                                 height: getProportionateScreenHeight(55),

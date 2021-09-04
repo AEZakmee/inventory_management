@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../styles/colors.dart';
 import 'constans.dart';
 import '../size_config.dart';
 
@@ -36,7 +35,9 @@ class CustomTextField extends StatelessWidget {
               child: Text(
                 hasError ? errorString : label,
                 style: TextStyle(
-                  color: hasError ? kErrorColor : kMainColor,
+                  color: hasError
+                      ? Theme.of(context).errorColor
+                      : Theme.of(context).primaryColor,
                   fontSize: getProportionateScreenHeight(17),
                 ),
               ),
@@ -45,24 +46,17 @@ class CustomTextField extends StatelessWidget {
             controller: textController,
             onChanged: (v) => onChanged(v),
             showCursor: true,
-            cursorColor: kMainColor,
-            style: TextStyle(
-              color: kMainColor,
-              fontSize: getProportionateScreenHeight(22),
-            ),
             decoration: InputDecoration(
               hintText: hintText,
-              hintStyle: TextStyle(
-                fontSize: getProportionateScreenHeight(18),
-                color: kTextColor,
-              ),
               contentPadding: EdgeInsets.only(
                 left: getProportionateScreenWidth(10),
               ),
-              enabledBorder:
-                  hasError ? kErrorOutlineBorderAdd : kOutlineBorderAdd,
-              focusedBorder:
-                  hasError ? kErrorOutlineBorderAdd : kEnabledOutlineBorderAdd,
+              enabledBorder: hasError
+                  ? kErrorOutlineBorderAdd(context)
+                  : kOutlineBorderAdd(context),
+              focusedBorder: hasError
+                  ? kErrorOutlineBorderAdd(context)
+                  : kEnabledOutlineBorderAdd(context),
             ),
           ),
         ],

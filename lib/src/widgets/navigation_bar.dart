@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:inventory_management/src/model/resource.dart';
-import 'package:inventory_management/src/providers/user_provider.dart';
-import 'package:inventory_management/src/screens/edit_product/edit_product_screen.dart';
-import 'file:///D:/AProjects/inventory_management/lib/src/widgets/pass_argument.dart';
-import 'package:inventory_management/src/screens/edit_resource/edit_resource_screen.dart';
-import 'package:inventory_management/src/screens/products/products_screen.dart';
-import 'package:inventory_management/src/screens/resources_screen/resources_screen.dart';
-import 'package:inventory_management/src/styles/colors.dart';
-import 'file:///D:/AProjects/inventory_management/lib/src/widgets/constans.dart';
-import 'package:provider/provider.dart';
-
+import '../screens/edit_product/edit_product_screen.dart';
+import '../screens/products/products_screen.dart';
+import '../screens/resources_screen/resources_screen.dart';
 import '../size_config.dart';
+import 'constans.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({
@@ -21,8 +14,8 @@ class NavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white60,
-        boxShadow: [kBoxShadowLite],
+        color: Theme.of(context).bottomAppBarColor,
+        boxShadow: [kBoxShadowLite(context)],
       ),
       child: Padding(
         padding:
@@ -46,7 +39,7 @@ class NavBar extends StatelessWidget {
             ),
             NavItem(
               icon: Icons.people,
-              title: 'Edit product',
+              title: 'Employees',
               press: () {
                 Navigator.pushNamed(context, EditProductScreen.routeName);
               },
@@ -82,7 +75,7 @@ class NavItem extends StatelessWidget {
             Flexible(
               child: Icon(
                 icon,
-                color: kMainColor,
+                color: Theme.of(context).primaryColor,
                 size: getProportionateScreenHeight(30),
               ),
             ),
@@ -91,7 +84,8 @@ class NavItem extends StatelessWidget {
               title,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: kMainColor,
+                color: Theme.of(context).primaryColor,
+                fontSize: getProportionateScreenWidth(15),
               ),
               maxLines: 1,
             )

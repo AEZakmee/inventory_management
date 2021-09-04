@@ -1,5 +1,7 @@
-import 'screens/loading/loading_screen.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'package:inventory_management/src/providers/theme_provider.dart';
 
+import 'screens/loading/loading_screen.dart';
 import 'providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,11 +14,17 @@ class App extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         initialRoute: LoadingScreen.routeName,
         routes: routes,
+        //hippieBlue
+        //brandBlue
+        theme: FlexColorScheme.light(scheme: FlexScheme.barossa).toTheme,
+        darkTheme: FlexColorScheme.dark(scheme: FlexScheme.barossa).toTheme,
+        themeMode: ThemeMode.system,
       ),
     );
   }

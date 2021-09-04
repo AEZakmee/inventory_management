@@ -2,9 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:provider/provider.dart';
-
 import '../../size_config.dart';
-import '../../styles/colors.dart';
 import 'components/body_updated.dart';
 import '../../providers/login_provider.dart';
 
@@ -23,7 +21,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       create: (_) => LoginProvider(),
       child: KeyboardDismissOnTap(
         child: Scaffold(
-          backgroundColor: kBackgroundColor,
           body: Body(),
         ),
       ),

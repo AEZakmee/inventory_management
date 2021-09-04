@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:inventory_management/src/widgets/app_bar.dart';
 import '../../providers/edit_resource_provider.dart';
-import '../../styles/colors.dart';
 import 'package:provider/provider.dart';
 import '../../size_config.dart';
 import 'components/body.dart';
@@ -20,7 +19,6 @@ class EditResourceScreen extends StatelessWidget {
       create: (_) => EditResourceProvider(args.resource),
       child: KeyboardDismissOnTap(
         child: Scaffold(
-          backgroundColor: kBackgroundColor,
           body: Body(),
           appBar: buildAppBar(title: 'Resource Page', context: context),
         ),
