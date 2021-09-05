@@ -1,6 +1,5 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
-import 'package:inventory_management/src/providers/theme_provider.dart';
-
+import 'providers/theme_provider.dart';
 import 'screens/loading/loading_screen.dart';
 import 'providers/user_provider.dart';
 import 'package:flutter/material.dart';

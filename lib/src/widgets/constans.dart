@@ -37,7 +37,7 @@ kErrorOutlineBorderAdd(context) => OutlineInputBorder(
 kLoginBackgroundGradient(context) => LinearGradient(
       colors: [
         Theme.of(context).accentColor,
-        Theme.of(context).primaryColorDark
+        Theme.of(context).primaryColorDark,
       ],
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,

@@ -1,6 +1,6 @@
+import '../screen_controller.dart';
 import '../sign_up/sign_up_screen.dart';
 import '../../providers/user_provider.dart';
-import '../main/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

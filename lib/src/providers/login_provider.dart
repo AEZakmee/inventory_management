@@ -131,10 +131,15 @@ class LoginProvider extends ChangeNotifier {
   bool get buttonPressed => _buttonPressed;
   //Data for animation
   double _overallPosition = 180;
-  double get overallPosition =>
-      _keyboardOpened ? _overallPosition - 150 : _overallPosition;
+  double get overallPosition {
+    if (_keyboardOpened) {
+      return _overallPosition - 150;
+    }
+    return _overallPosition;
+  }
+
   double get loginFieldPosition => overallPosition + 80;
-  double get signUpFieldPosition => overallPosition + 50;
+  double get signUpFieldPosition => overallPosition + 40;
 
   bool _keyboardOpened = false;
   void changeVisibility(bool value) {

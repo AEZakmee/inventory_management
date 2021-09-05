@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inventory_management/src/providers/resource_provider.dart';
 import 'package:inventory_management/src/widgets/paddings.dart';
 import 'package:inventory_management/src/widgets/staggered_animations.dart';
 import '../../../model/resource.dart';
@@ -7,10 +8,11 @@ import '../../../screens/resources_screen/components/resource_row.dart';
 import '../../../size_config.dart';
 import 'package:provider/provider.dart';
 
-class Body extends StatelessWidget {
+class ResourcesBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return ChangeNotifierProvider(
+      create: (_) => ResourceProvider(),
       child: StreamBuilder<List<Resource>>(
           stream: Provider.of<UserProvider>(context).listResources,
           builder: (context, snapshot) {

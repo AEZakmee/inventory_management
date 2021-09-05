@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inventory_management/src/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
-class Body extends StatelessWidget {
+class MainBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(

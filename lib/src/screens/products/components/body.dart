@@ -9,46 +9,49 @@ import '../../../widgets/pass_argument.dart';
 import '../../../widgets/utilities.dart';
 import 'package:provider/provider.dart';
 
-class Body extends StatelessWidget {
+class ProductsBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<Product>>(
-        stream: Provider.of<UserProvider>(context).listProducts,
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.only(
-                top: getProportionateScreenHeight(10),
-                bottom: getProportionateScreenHeight(100),
-              ),
-              child: Container(
-                width: double.infinity,
-                child: Wrap(
-                  alignment: WrapAlignment.spaceAround,
-                  children: [
-                    ...List.generate(
-                      snapshot.data.length,
-                      (index) => Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: getProportionateScreenWidth(10),
-                          vertical: getProportionateScreenHeight(10),
-                        ),
-                        child: ProductContainer(
-                          product: snapshot.data[index],
+    return ChangeNotifierProvider(
+      create: (_) => ProductsProvider(),
+      child: StreamBuilder<List<Product>>(
+          stream: Provider.of<UserProvider>(context).listProducts,
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  top: getProportionateScreenHeight(10),
+                  bottom: getProportionateScreenHeight(100),
+                ),
+                child: Container(
+                  width: double.infinity,
+                  child: Wrap(
+                    alignment: WrapAlignment.spaceAround,
+                    children: [
+                      ...List.generate(
+                        snapshot.data.length,
+                        (index) => Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: getProportionateScreenWidth(10),
+                            vertical: getProportionateScreenHeight(10),
+                          ),
+                          child: ProductContainer(
+                            product: snapshot.data[index],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        });
+            );
+          }),
+    );
   }
 }
 
