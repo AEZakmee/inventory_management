@@ -17,18 +17,14 @@ class ResourceRow extends StatelessWidget {
   final Resource resource;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: kMiniPadding),
+    return Card(
+      elevation: 8,
       child: Slidable(
         actionPane: SlidableDrawerActionPane(),
         actionExtentRatio: 0.30,
         child: Container(
           width: double.infinity,
           height: getProportionateScreenHeight(100),
-          decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
-            boxShadow: [kBoxShadowLite(context)],
-          ),
         ),
         actions: <Widget>[
           IconSlideAction(

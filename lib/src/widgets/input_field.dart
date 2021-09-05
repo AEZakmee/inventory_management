@@ -37,7 +37,7 @@ class CustomTextField extends StatelessWidget {
                 style: TextStyle(
                   color: hasError
                       ? Theme.of(context).errorColor
-                      : Theme.of(context).primaryColor,
+                      : Theme.of(context).accentColor,
                   fontSize: getProportionateScreenHeight(17),
                 ),
               ),
@@ -51,6 +51,7 @@ class CustomTextField extends StatelessWidget {
               contentPadding: EdgeInsets.only(
                 left: getProportionateScreenWidth(10),
               ),
+              fillColor: Colors.transparent,
               enabledBorder: hasError
                   ? kErrorOutlineBorderAdd(context)
                   : kOutlineBorderAdd(context),

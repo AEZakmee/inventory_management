@@ -132,6 +132,9 @@ class EditResourceProvider extends ChangeNotifier {
         quantityHasError = false;
         try {
           double quantity = double.parse(data);
+          if (quantity <= 0) {
+            quantityHasError = true;
+          }
           _resource.quantity = quantity;
         } on Exception {
           quantityHasError = true;

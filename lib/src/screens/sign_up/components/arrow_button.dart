@@ -60,12 +60,13 @@ class ArrowButton extends StatelessWidget {
         child: !Provider.of<LoginProvider>(context).isLoading
             ? Icon(
                 Icons.arrow_forward,
+                color: Theme.of(context).buttonTheme.colorScheme.onPrimary,
                 size: getProportionateScreenHeight(40),
               )
             : Padding(
                 padding: EdgeInsets.all(getProportionateScreenHeight(10)),
                 child: SpinKitFadingCircle(
-                  color: Theme.of(context).backgroundColor,
+                  color: Theme.of(context).buttonTheme.colorScheme.onPrimary,
                 ),
               ),
       ),

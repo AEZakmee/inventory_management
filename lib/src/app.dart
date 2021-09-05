@@ -20,9 +20,7 @@ class App extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         initialRoute: LoadingScreen.routeName,
         routes: routes,
-        //hippieBlue
-        //brandBlue
-        theme: FlexColorScheme.light(scheme: FlexScheme.barossa).toTheme,
+        theme: FlexColorScheme.dark(scheme: FlexScheme.barossa).toTheme,
         darkTheme: FlexColorScheme.dark(scheme: FlexScheme.barossa).toTheme,
         themeMode: ThemeMode.system,
       ),

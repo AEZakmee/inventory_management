@@ -31,10 +31,11 @@ class _BodyState extends State<Body> {
               child: Column(
                 children: [
                   mediumPadding(),
-                  Text(
-                    prov.isEdit ? "Update product data" : "Enter product data",
-                    style: Theme.of(context).textTheme.headline4,
-                  ),
+                  editItemHeadlineText(
+                      prov.isEdit
+                          ? "Update product data"
+                          : "Enter product data",
+                      context),
                   CustomTextField(
                     textController: prov.nameController,
                     hintText: "Enter resource name",

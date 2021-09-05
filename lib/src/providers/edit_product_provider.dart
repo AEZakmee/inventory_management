@@ -77,6 +77,9 @@ class EditProductProvider extends ChangeNotifier {
         quantityHasError = false;
         try {
           double quantity = double.parse(data);
+          if (quantity <= 0) {
+            quantityHasError = true;
+          }
           _quantity = quantity;
         } on Exception {
           quantityHasError = true;

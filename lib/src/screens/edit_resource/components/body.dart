@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../../size_config.dart';
 import '../../../widgets/paddings.dart';
 import '../../../widgets/text_widgets.dart';
 import '../../../widgets/utilities.dart';
@@ -30,10 +31,11 @@ class _BodyState extends State<Body> {
             child: Column(
               children: [
                 mediumPadding(),
-                Text(
-                  prov.isEdit ? "Update resource data" : "Enter resource data",
-                  style: Theme.of(context).textTheme.headline4,
-                ),
+                editItemHeadlineText(
+                    prov.isEdit
+                        ? "Update resource data"
+                        : "Enter resource data",
+                    context),
                 CustomTextField(
                   textController: prov.nameController,
                   hintText: "Enter resource name",

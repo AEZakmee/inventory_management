@@ -19,11 +19,6 @@ kBoxShadow(context) => BoxShadow(
       blurRadius: 15,
       spreadRadius: 5,
     );
-kBoxDecoration(context) => BoxDecoration(
-      color: Theme.of(context).backgroundColor,
-      borderRadius: kBorderRadius,
-      boxShadow: [kBoxShadow(context)],
-    );
 
 //Add products page
 kOutlineBorderAdd(context) => OutlineInputBorder(
@@ -32,7 +27,7 @@ kOutlineBorderAdd(context) => OutlineInputBorder(
     );
 kEnabledOutlineBorderAdd(context) => OutlineInputBorder(
       borderRadius: kInputFiledBorderRadiusAdd,
-      borderSide: BorderSide(color: Theme.of(context).primaryColor),
+      borderSide: BorderSide(color: Theme.of(context).accentColor),
     );
 kErrorOutlineBorderAdd(context) => OutlineInputBorder(
       borderRadius: kInputFiledBorderRadiusAdd,

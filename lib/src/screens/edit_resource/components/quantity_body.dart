@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:inventory_management/src/widgets/text_widgets.dart';
+import '../../../size_config.dart';
 import '../../../widgets/paddings.dart';
 import '../../../widgets/utilities.dart';
 import '../../../widgets/type_button.dart';
@@ -29,8 +31,7 @@ class _BodyState extends State<Body> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 mediumPadding(),
-                Text('Update quantity',
-                    style: Theme.of(context).textTheme.headline4),
+                editItemHeadlineText("Update quantity", context),
                 bigPadding(),
                 CustomTextField(
                   textController: prov.quantityController,

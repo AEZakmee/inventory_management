@@ -143,10 +143,10 @@ class AddResourceRow extends StatelessWidget {
                       icon: Icon(Icons.arrow_downward),
                       iconSize: getProportionateScreenWidth(25),
                       elevation: 16,
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontSize: getProportionateScreenWidth(17),
-                      ),
+                      // style: TextStyle(
+                      //   color: Theme.of(context).textTheme.button.color,
+                      //   fontSize: getProportionateScreenWidth(17),
+                      // ),
                       onChanged: (Resource newValue) {
                         prov.selectedResource = newValue;
                       },

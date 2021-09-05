@@ -79,10 +79,8 @@ class _BodyState extends State<Body> {
                   ),
                   Column(
                     children: [
-                      AnimatedContainer(
-                        duration: kAnimDurationLogin,
-                        curve: kAnimTypeLogin,
-                        decoration: kBoxDecoration(context),
+                      Card(
+                        elevation: 16,
                         child: Padding(
                           padding: EdgeInsets.symmetric(
                             horizontal: getProportionateScreenWidth(20),
