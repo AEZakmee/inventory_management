@@ -33,3 +33,8 @@ String getQuantityTypeString(Resource resource) {
   return resource.quantity.toString() +
       (resource.type.index == 0 ? ' L' : ' Kg');
 }
+
+String getQuantityTypeStringUsed(Resource resource) {
+  return resource.totalUsed.toString() +
+      (resource.type.index == 0 ? ' L' : ' Kg');
+}

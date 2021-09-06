@@ -16,3 +16,23 @@ Widget editItemHeadlineText(String text, context) => Text(
             fontSize: getProportionateScreenWidth(32),
           ),
     );
+
+Widget cardHeadlineBig(String text, context) => Text(
+      text,
+      overflow: TextOverflow.ellipsis,
+      maxLines: 1,
+      softWrap: false,
+      style: Theme.of(context).textTheme.headline5.copyWith(
+            fontSize: getProportionateScreenHeight(30),
+          ),
+    );
+
+Widget cardHeadlineMedium(String text, context) => Text(
+      text,
+      overflow: TextOverflow.ellipsis,
+      maxLines: 1,
+      softWrap: false,
+      style: Theme.of(context).textTheme.headline5.copyWith(
+            fontSize: getProportionateScreenHeight(25),
+          ),
+    );

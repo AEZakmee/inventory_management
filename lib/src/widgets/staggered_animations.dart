@@ -29,23 +29,24 @@ class StaggeredListView extends StatelessWidget {
 
 class StaggeredGridView extends StatelessWidget {
   final int count;
-  final Widget child;
+  final Function child;
   const StaggeredGridView({Key key, this.count, this.child}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    print(count);
     return AnimationLimiter(
       child: GridView.count(
-        crossAxisCount: count,
+        crossAxisCount: 2,
         children: List.generate(
-          100,
+          count,
           (int index) {
             return AnimationConfiguration.staggeredGrid(
               position: index,
-              duration: const Duration(milliseconds: 375),
-              columnCount: count,
+              duration: const Duration(milliseconds: 500),
+              columnCount: count ~/ 2,
               child: ScaleAnimation(
                 child: FadeInAnimation(
-                  child: child,
+                  child: child(index),
                 ),
               ),
             );

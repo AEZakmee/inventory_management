@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:inventory_management/src/widgets/paddings.dart';
+import 'package:inventory_management/src/widgets/staggered_animations.dart';
+import 'package:inventory_management/src/widgets/text_widgets.dart';
 import '../../../model/product.dart';
 import '../../../providers/products_provider.dart';
 import '../../../providers/user_provider.dart';
@@ -15,155 +18,114 @@ class ProductsBody extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => ProductsProvider(),
       child: StreamBuilder<List<Product>>(
-          stream: Provider.of<UserProvider>(context).listProducts,
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            return SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.only(
-                  top: getProportionateScreenHeight(10),
-                  bottom: getProportionateScreenHeight(100),
-                ),
-                child: Container(
-                  width: double.infinity,
-                  child: Wrap(
-                    alignment: WrapAlignment.spaceAround,
-                    children: [
-                      ...List.generate(
-                        snapshot.data.length,
-                        (index) => Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: getProportionateScreenWidth(10),
-                            vertical: getProportionateScreenHeight(10),
-                          ),
-                          child: ProductContainer(
-                            product: snapshot.data[index],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+        stream: Provider.of<UserProvider>(context).listProducts,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
             );
-          }),
+          }
+          return StaggeredGridView(
+            count: snapshot.data.length + 1,
+            child: (index) {
+              if (index < snapshot.data.length) {
+                return GridViewCard(product: snapshot.data[index]);
+              } else {
+                return GridViewAddCard();
+              }
+            },
+          );
+        },
+      ),
     );
   }
 }
 
-class ProductContainer extends StatelessWidget {
-  final Product product;
-  const ProductContainer({Key key, this.product}) : super(key: key);
+class GridViewAddCard extends StatelessWidget {
+  const GridViewAddCard({
+    Key key,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onLongPress: () {
-        kDeletePopup(
-          context: context,
-          title: 'You are about to delete ${product.name}!\nAre you sure?',
-          function: () {
-            Provider.of<ProductsProvider>(context, listen: false)
-                .deleteProduct(product.uniqueID);
-          },
-        );
-      },
-      child: Container(
-        width: getProportionateScreenWidth(165),
-        decoration: BoxDecoration(
-          color: Theme.of(context).backgroundColor,
-          borderRadius: kBorderRadiusLite,
-          boxShadow: [kBoxShadowLite(context)],
-        ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: getProportionateScreenWidth(10),
-          ),
-          child: Column(
-            children: [
-              SizedBox(
-                height: getProportionateScreenHeight(10),
-                width: double.infinity,
-              ),
-              Text(
-                product.name,
-                style: TextStyle(
-                  fontSize: getProportionateScreenWidth(20),
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-              SizedBox(
-                height: getProportionateScreenHeight(15),
-              ),
-              Row(
-                children: [
-                  Text(
-                    'Required resources',
-                    style: TextStyle(
-                      fontSize: getProportionateScreenWidth(14),
-                      fontWeight: FontWeight.w300,
-                    ),
+    return InkWell(
+      onTap: () => Navigator.pushNamed(
+        context,
+        EditProductScreen.routeName,
+        arguments: ScreenArgumentsProduct(null),
+      ),
+      child: Card(
+        elevation: 8,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Add Product',
+              style: Theme.of(context).textTheme.headline5.copyWith(
+                    fontSize: getProportionateScreenWidth(25),
                   ),
-                  Spacer(),
-                ],
-              ),
-              SizedBox(
-                height: getProportionateScreenHeight(5),
-              ),
-              ...List.generate(
-                product.resources.length,
-                (i) => buildResRow(
-                  itemQuantity: product.resources[i],
-                  isValid: product.resources[i].isValid,
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  IconButton(
-                    color: Theme.of(context).primaryColor,
-                    icon: Icon(Icons.edit),
-                    iconSize: getProportionateScreenHeight(35),
-                    onPressed: () {
-                      Navigator.pushNamed(
-                        context,
-                        EditProductScreen.routeName,
-                        arguments: ScreenArgumentsProduct(product),
-                      );
-                    },
-                  ),
-                ],
-              )
-            ],
-          ),
+            ),
+            Icon(
+              Icons.add_circle,
+              size: getProportionateScreenWidth(50),
+            ),
+          ],
         ),
       ),
     );
   }
+}
 
-  Widget buildResRow({ItemQuantity itemQuantity, bool isValid}) {
-    return Row(
-      children: [
-        Text(
-          itemQuantity.res.name,
-          style: TextStyle(
-            color: Colors.red,
-          ),
+class GridViewCard extends StatelessWidget {
+  const GridViewCard({
+    Key key,
+    this.product,
+  }) : super(key: key);
+  final Product product;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 8,
+      child: Padding(
+        padding: EdgeInsets.all(
+          getProportionateScreenWidth(10),
         ),
-        Spacer(),
-        Text(
-          itemQuantity.res.quantity.toString() +
-              (itemQuantity.res.type.index == 0 ? ' L' : ' Kg'),
-          style: TextStyle(
-            color: Colors.red,
-            fontSize: getProportionateScreenWidth(11),
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            cardHeadlineMedium(product.name, context),
+            smallPadding(),
+            Text(
+              'Required Resources:',
+              style: Theme.of(context).textTheme.headline4.copyWith(
+                    fontSize: getProportionateScreenWidth(15),
+                  ),
+            ),
+            smallPadding(),
+            ...List.generate(
+              product.resources.length,
+              (index) => Row(
+                children: [
+                  Text(
+                    product.resources[index].res.name,
+                    style: Theme.of(context).textTheme.headline2.copyWith(
+                          fontSize: getProportionateScreenWidth(15),
+                        ),
+                  ),
+                  Spacer(),
+                  Text(
+                    getQuantityTypeString(product.resources[index].res),
+                    style: Theme.of(context).textTheme.headline2.copyWith(
+                          fontSize: getProportionateScreenWidth(15),
+                        ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
