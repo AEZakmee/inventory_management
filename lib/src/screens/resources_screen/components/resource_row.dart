@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:inventory_management/src/providers/user_provider.dart';
 import '../../../widgets/text_widgets.dart';
 import '../../../widgets/utilities.dart';
 import '../../../screens/edit_resource/add_quantity_screen.dart';
@@ -49,12 +50,21 @@ class ResourceRow extends StatelessWidget {
           ),
         ),
         actions: <Widget>[
-          IconSlideAction(
-            caption: 'Add to Favorites',
-            color: Theme.of(context).accentColor,
-            icon: Icons.star,
-            onTap: () => null,
-          ),
+          resource.isFavourite ?? false
+              ? IconSlideAction(
+                  caption: 'Unfavorite',
+                  color: Theme.of(context).accentColor,
+                  icon: Icons.star,
+                  onTap: () => Provider.of<UserProvider>(context, listen: false)
+                      .switchFavourite(resource: resource),
+                )
+              : IconSlideAction(
+                  caption: 'Add to Favorites',
+                  color: Theme.of(context).accentColor,
+                  icon: Icons.star_border,
+                  onTap: () => Provider.of<UserProvider>(context, listen: false)
+                      .switchFavourite(resource: resource),
+                ),
           IconSlideAction(
             caption: 'Top up',
             color: Theme.of(context).secondaryHeaderColor,

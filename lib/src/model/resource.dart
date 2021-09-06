@@ -4,9 +4,15 @@ class Resource {
   ResourceType type;
   double quantity;
   double totalUsed;
+  bool isFavourite;
 
   Resource(
-      {this.uniqueID, this.name, this.type, this.quantity, this.totalUsed = 0});
+      {this.uniqueID,
+      this.name,
+      this.type,
+      this.quantity,
+      this.totalUsed = 0,
+      this.isFavourite = false});
 
   factory Resource.fromJson(Map<String, dynamic> json) {
     return Resource(
@@ -15,6 +21,7 @@ class Resource {
       type: ResourceType.values[json['type']],
       quantity: json['quantity'],
       totalUsed: json['totalUsed'],
+      isFavourite: json['isFavourite'],
     );
   }
 
@@ -25,6 +32,7 @@ class Resource {
       'type': type.index,
       'quantity': quantity,
       'totalUsed': totalUsed,
+      'isFavourite': isFavourite,
     };
   }
 }

@@ -15,13 +15,15 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        initialRoute: LoadingScreen.routeName,
-        routes: routes,
-        theme: FlexColorScheme.light(scheme: FlexScheme.barossa).toTheme,
-        darkTheme: FlexColorScheme.dark(scheme: FlexScheme.barossa).toTheme,
-        themeMode: ThemeMode.system,
+      child: Consumer(
+        builder: (context, ThemeProvider themeNotifier, child) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            initialRoute: LoadingScreen.routeName,
+            routes: routes,
+            theme: themeNotifier.getTheme(),
+          );
+        },
       ),
     );
   }

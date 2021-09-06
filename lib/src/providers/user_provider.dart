@@ -31,6 +31,19 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void switchFavourite({Resource resource, Product product}) {
+    if (resource != null) {
+      if (resource.isFavourite == null) resource.isFavourite = false;
+      resource.isFavourite = !resource.isFavourite;
+      _db.switchFavouriteResource(resource);
+    } else if (product != null) {
+      if (product.isFavourite == null) product.isFavourite = false;
+      product.isFavourite = !product.isFavourite;
+      _db.switchFavouriteProduct(product);
+    }
+    notifyListeners();
+  }
+
   Stream<List<Resource>> get listResources => _db.getResources();
   Stream<List<Product>> get listProducts => _db.getProducts();
 

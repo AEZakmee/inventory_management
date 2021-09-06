@@ -101,12 +101,19 @@ class _PickedResourcesLVState extends State<PickedResourcesLV> {
                   ),
                 ),
                 Spacer(),
-                Text(
-                  getQuantityTypeString(item.res),
-                  style: Theme.of(context).textTheme.bodyText1.copyWith(
-                        fontSize: getProportionateScreenWidth(9),
+                item.isValid
+                    ? Text(
+                        getQuantityTypeString(item.res),
+                        style: Theme.of(context).textTheme.bodyText1.copyWith(
+                              fontSize: getProportionateScreenWidth(9),
+                            ),
+                      )
+                    : Text(
+                        'deleted',
+                        style: Theme.of(context).textTheme.bodyText1.copyWith(
+                              fontSize: getProportionateScreenWidth(10),
+                            ),
                       ),
-                ),
               ],
             ),
           ),
@@ -143,10 +150,6 @@ class AddResourceRow extends StatelessWidget {
                       icon: Icon(Icons.arrow_downward),
                       iconSize: getProportionateScreenWidth(25),
                       elevation: 16,
-                      // style: TextStyle(
-                      //   color: Theme.of(context).textTheme.button.color,
-                      //   fontSize: getProportionateScreenWidth(17),
-                      // ),
                       onChanged: (Resource newValue) {
                         prov.selectedResource = newValue;
                       },

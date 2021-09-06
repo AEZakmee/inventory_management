@@ -1,4 +1,6 @@
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
+import 'package:inventory_management/src/widgets/app_bar.dart';
+import 'package:inventory_management/src/widgets/drawer.dart';
 import '../model/user.dart';
 import '../providers/user_provider.dart';
 import '../screens/edit_product/edit_product_screen.dart';
@@ -86,6 +88,23 @@ class _MainScreenState extends State<MainScreen> with DisposableWidget {
           ],
         ),
         floatingActionButton: buildFloatingActionButton(context),
+        appBar: _selectedIndex == 0
+            ? AppBar(
+                elevation: 8,
+                title: Text('Main menu'),
+                centerTitle: true,
+                leading: Builder(
+                  builder: (context) => IconButton(
+                    icon: Icon(
+                      Icons.menu,
+                      size: getProportionateScreenHeight(30),
+                    ),
+                    onPressed: () => Scaffold.of(context).openDrawer(),
+                  ),
+                ),
+              )
+            : null,
+        drawer: CustomDrawer(),
       );
     else
       return Scaffold(

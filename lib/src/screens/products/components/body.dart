@@ -85,45 +85,100 @@ class GridViewCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 8,
-      child: Padding(
-        padding: EdgeInsets.all(
-          getProportionateScreenWidth(10),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            cardHeadlineMedium(product.name, context),
-            smallPadding(),
-            Text(
-              'Required Resources:',
-              style: Theme.of(context).textTheme.headline4.copyWith(
-                    fontSize: getProportionateScreenWidth(15),
-                  ),
-            ),
-            smallPadding(),
-            ...List.generate(
-              product.resources.length,
-              (index) => Row(
-                children: [
-                  Text(
-                    product.resources[index].res.name,
-                    style: Theme.of(context).textTheme.headline2.copyWith(
-                          fontSize: getProportionateScreenWidth(15),
+    return InkWell(
+      onTap: () => Navigator.pushNamed(
+        context,
+        EditProductScreen.routeName,
+        arguments: ScreenArgumentsProduct(product),
+      ),
+      child: Card(
+        elevation: 8,
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: getProportionateScreenWidth(10),
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: getProportionateScreenWidth(115),
+                      child: cardHeadlineMedium(product.name, context),
+                    ),
+                    Spacer(),
+                    PopupMenuButton(
+                      padding: EdgeInsets.all(0),
+                      itemBuilder: (context) {
+                        return [
+                          PopupMenuItem(value: 'edit', child: Text('Edit')),
+                          product.isFavourite ?? false
+                              ? PopupMenuItem(
+                                  value: 'fav', child: Text('Unfavorite'))
+                              : PopupMenuItem(
+                                  value: 'fav',
+                                  child: Text('Add to Favorites')),
+                          PopupMenuItem(
+                              value: 'proceed', child: Text('Proceed Order')),
+                        ];
+                      },
+                      onSelected: (String value) {
+                        switch (value) {
+                          case 'edit':
+                            return Navigator.pushNamed(
+                              context,
+                              EditProductScreen.routeName,
+                              arguments: ScreenArgumentsProduct(product),
+                            );
+                          case 'fav':
+                            Provider.of<UserProvider>(context, listen: false)
+                                .switchFavourite(product: product);
+                            break;
+                          case 'proceed':
+                            return null;
+                        }
+                      },
+                    )
+                  ],
+                ),
+                smallPadding(),
+                Text(
+                  'Required Resources:',
+                  style: Theme.of(context).textTheme.headline4.copyWith(
+                        fontSize: getProportionateScreenWidth(15),
+                      ),
+                ),
+                smallPadding(),
+                ...List.generate(
+                  product.resources.length,
+                  (index) => Row(
+                    children: [
+                      Text(
+                        product.resources[index].res.name,
+                        style: Theme.of(context).textTheme.headline2.copyWith(
+                              fontSize: getProportionateScreenWidth(15),
+                            ),
+                      ),
+                      Spacer(),
+                      if (product.resources[index].isValid)
+                        Text(
+                          getQuantityTypeString(product.resources[index].res),
+                          style: Theme.of(context).textTheme.headline2.copyWith(
+                                fontSize: getProportionateScreenWidth(15),
+                              ),
                         ),
-                  ),
-                  Spacer(),
-                  Text(
-                    getQuantityTypeString(product.resources[index].res),
-                    style: Theme.of(context).textTheme.headline2.copyWith(
-                          fontSize: getProportionateScreenWidth(15),
+                      if (!product.resources[index].isValid)
+                        Tooltip(
+                          child: Icon(Icons.error),
+                          message: 'Resource has been deleted',
                         ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

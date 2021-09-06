@@ -29,7 +29,7 @@ Widget cardHeadlineBig(String text, context) => Text(
 
 Widget cardHeadlineMedium(String text, context) => Text(
       text,
-      overflow: TextOverflow.ellipsis,
+      overflow: TextOverflow.fade,
       maxLines: 1,
       softWrap: false,
       style: Theme.of(context).textTheme.headline5.copyWith(

@@ -147,6 +147,7 @@ class EditProductProvider extends ChangeNotifier {
         quantityController.text = "";
         _quantity = 0;
         _product.resources.insert(0, newItem);
+        notifyListeners();
         return true;
       } else {
         _product.resources
@@ -155,6 +156,7 @@ class EditProductProvider extends ChangeNotifier {
             .first
             .res
             .quantity = _quantity;
+        notifyListeners();
       }
     } else {
       quantityHasError = true;

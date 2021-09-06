@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inventory_management/src/providers/resource_provider.dart';
 import 'package:inventory_management/src/widgets/paddings.dart';
 import 'package:inventory_management/src/widgets/staggered_animations.dart';
+import 'package:inventory_management/src/widgets/text_widgets.dart';
 import '../../../model/resource.dart';
 import '../../../providers/user_provider.dart';
 import '../../../screens/resources_screen/components/resource_row.dart';
@@ -21,21 +22,25 @@ class ResourcesBody extends StatelessWidget {
                 child: CircularProgressIndicator(),
               );
             }
+            if (snapshot.data.length == 0) {
+              return Center(
+                child: cardHeadlineMedium("There are no resources", context),
+              );
+            }
             return SingleChildScrollView(
-              child: StaggeredColumn(
-                children: [
-                  ...List.generate(
-                    snapshot.data.length,
-                    (index) => ResourceRow(
-                      resource: snapshot.data[index],
-                    ),
+                child: StaggeredColumn(
+              children: [
+                ...List.generate(
+                  snapshot.data.length,
+                  (index) => ResourceRow(
+                    resource: snapshot.data[index],
                   ),
-                  SizedBox(
-                    height: getProportionateScreenHeight(100),
-                  ),
-                ],
-              ),
-            );
+                ),
+                SizedBox(
+                  height: getProportionateScreenHeight(100),
+                ),
+              ],
+            ));
           }),
     );
   }

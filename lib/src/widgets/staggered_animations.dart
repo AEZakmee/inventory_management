@@ -33,7 +33,6 @@ class StaggeredGridView extends StatelessWidget {
   const StaggeredGridView({Key key, this.count, this.child}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    print(count);
     return AnimationLimiter(
       child: GridView.count(
         crossAxisCount: 2,

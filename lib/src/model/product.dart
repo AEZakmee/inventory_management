@@ -4,15 +4,22 @@ class Product {
   String uniqueID;
   String name;
   double totalOrdered;
+  bool isFavourite;
   List<ItemQuantity> resources;
 
-  Product({this.uniqueID, this.name, this.resources, this.totalOrdered = 0});
+  Product(
+      {this.uniqueID,
+      this.name,
+      this.resources,
+      this.totalOrdered = 0,
+      this.isFavourite = false});
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
       uniqueID: json['uniqueID'],
       name: json['name'],
       totalOrdered: json['totalOrdered'],
+      isFavourite: json['isFavourite'],
       resources: List.from(json['resources'])
           .map((e) => ItemQuantity.fromJson(e))
           .toList(),
@@ -24,6 +31,7 @@ class Product {
       'uniqueID': uniqueID,
       'name': name,
       'totalOrdered': totalOrdered,
+      'isFavourite': isFavourite,
       'resources': resources.map((e) => e.toMap()).toList(),
     };
   }

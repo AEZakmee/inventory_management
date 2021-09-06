@@ -94,12 +94,35 @@ class FirestoreService {
         .onError((error, stackTrace) => throw new AddException());
   }
 
-  Future<void> updateResource(Resource resource) {
-    return _db
-        .collection('resources')
-        .doc(resource.uniqueID)
-        .update(resource.toMap())
-        .onError((error, stackTrace) => throw new AddException());
+  Future<void> updateResource(Resource resource) async {
+    Resource res = await fetchResource(resource.uniqueID);
+    if (res.name != resource.name || res.quantity != resource.quantity) {
+      await _db
+          .collection('resources')
+          .doc(resource.uniqueID)
+          .update(resource.toMap())
+          .onError((error, stackTrace) => throw new AddException());
+      if (res.name != resource.name) {
+        List<Product> products = await getProductsFuture();
+        if (products != null) {
+          products.forEach((element) {
+            bool hasElements = false;
+            for (int i = 0; i < element.resources.length; i++) {
+              if (element.resources[i].res.uniqueID == resource.uniqueID) {
+                hasElements = true;
+                element.resources[i].res.name = resource.name;
+              }
+            }
+            if (hasElements) {
+              _db
+                  .collection('products')
+                  .doc(element.uniqueID)
+                  .update(element.toMap());
+            }
+          });
+        }
+      }
+    }
   }
 
   Future<void> deleteResource(String id) async {
@@ -141,6 +164,22 @@ class FirestoreService {
         .collection('products')
         .doc(product.uniqueID)
         .update(product.toMap())
+        .onError((error, stackTrace) => throw new AddException());
+  }
+
+  Future<void> switchFavouriteProduct(Product product) {
+    return _db
+        .collection('products')
+        .doc(product.uniqueID)
+        .update(product.toMap())
+        .onError((error, stackTrace) => throw new AddException());
+  }
+
+  Future<void> switchFavouriteResource(Resource resource) {
+    return _db
+        .collection('resources')
+        .doc(resource.uniqueID)
+        .update(resource.toMap())
         .onError((error, stackTrace) => throw new AddException());
   }
 }
