@@ -81,7 +81,10 @@ class _MainScreenState extends State<MainScreen> with DisposableWidget {
             });
           },
           children: <Widget>[
-            ChildWidget(screen: ScreenEnum.Main),
+            ChildWidget(
+              screen: ScreenEnum.Main,
+              listViewKey: _pageController,
+            ),
             ChildWidget(screen: ScreenEnum.Resources),
             ChildWidget(screen: ScreenEnum.Products),
             ChildWidget(screen: ScreenEnum.Employees)
@@ -136,13 +139,17 @@ class _MainScreenState extends State<MainScreen> with DisposableWidget {
 
 class ChildWidget extends StatelessWidget {
   final ScreenEnum screen;
-  const ChildWidget({Key key, this.screen}) : super(key: key);
+  final listViewKey;
+  const ChildWidget({Key key, this.screen, this.listViewKey}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     switch (screen) {
       case ScreenEnum.Main:
-        return SafeArea(child: MainBody());
+        return SafeArea(
+            child: MainBody(
+          listViewKey: listViewKey,
+        ));
       case ScreenEnum.Resources:
         return SafeArea(child: ResourcesBody());
       case ScreenEnum.Products:

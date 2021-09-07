@@ -78,3 +78,25 @@ class StaggeredColumn extends StatelessWidget {
     );
   }
 }
+
+class StaggeredRow extends StatelessWidget {
+  final int count;
+  final List<Widget> children;
+  const StaggeredRow({Key key, this.count, this.children}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return AnimationLimiter(
+      child: Row(
+        children: AnimationConfiguration.toStaggeredList(
+          duration: const Duration(milliseconds: 375),
+          childAnimationBuilder: (widget) => ScaleAnimation(
+            child: FadeInAnimation(
+              child: widget,
+            ),
+          ),
+          children: children,
+        ),
+      ),
+    );
+  }
+}

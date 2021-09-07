@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import 'package:inventory_management/src/model/log.dart';
 import 'package:inventory_management/src/model/product.dart';
 import 'package:inventory_management/src/model/resource.dart';
+import 'package:inventory_management/src/providers/user_provider.dart';
 import '../model/user.dart';
 
 class FirestoreService {
@@ -16,6 +17,7 @@ class FirestoreService {
   FirebaseFirestore _db = FirebaseFirestore.instance;
 
   Future<void> addUser(AppUser user) {
+    logToFirestore('New user registered: ${user.name}');
     return _db.collection('users').doc(user.userId).set(user.toMap());
   }
 
@@ -63,6 +65,16 @@ class FirestoreService {
         .map((event) => event.map((e) => Product.fromJson(e.data())).toList());
   }
 
+  Stream<List<Log>> getPrevLogs() {
+    return _db
+        .collection('logs')
+        .orderBy("createdAt", descending: true)
+        .limit(10)
+        .snapshots()
+        .map((event) => event.docs)
+        .map((event) => event.map((e) => Log.fromJson(e.data())).toList());
+  }
+
   Future<List<Product>> getProductsFuture() {
     return _db.collection('products').get().then(
         (value) => value.docs.map((e) => Product.fromJson(e.data())).toList());
@@ -87,6 +99,7 @@ class FirestoreService {
   }
 
   Future<void> addResource(Resource resource) {
+    logToFirestore('Added new resource: ${resource.name}');
     return _db
         .collection('resources')
         .doc(resource.uniqueID)
@@ -95,6 +108,7 @@ class FirestoreService {
   }
 
   Future<void> updateResource(Resource resource) async {
+    logToFirestore('Updated resource: ${resource.name}');
     Resource res = await fetchResource(resource.uniqueID);
     if (res.name != resource.name || res.quantity != resource.quantity) {
       await _db
@@ -125,14 +139,15 @@ class FirestoreService {
     }
   }
 
-  Future<void> deleteResource(String id) async {
+  Future<void> deleteResource(Resource resource) async {
+    logToFirestore('Deleted resource: ${resource.name}');
     List<Product> products = await getProductsFuture();
-    _db.collection('resources').doc(id).delete();
+    _db.collection('resources').doc(resource.uniqueID).delete();
     if (products != null) {
       products.forEach((element) {
         bool hasElements = false;
         for (int i = 0; i < element.resources.length; i++) {
-          if (element.resources[i].res.uniqueID == id) {
+          if (element.resources[i].res.uniqueID == resource.uniqueID) {
             hasElements = true;
             element.resources[i].isValid = false;
           }
@@ -147,11 +162,13 @@ class FirestoreService {
     }
   }
 
-  Future<void> deleteProduct(String id) {
-    return _db.collection('products').doc(id).delete();
+  Future<void> deleteProduct(Product product) {
+    logToFirestore('Deleted product: ${product.name}');
+    return _db.collection('products').doc(product.uniqueID).delete();
   }
 
   Future<void> addProduct(Product product) {
+    logToFirestore('Added new product: ${product.name}');
     return _db
         .collection('products')
         .doc(product.uniqueID)
@@ -160,6 +177,7 @@ class FirestoreService {
   }
 
   Future<void> updateProduct(Product product) {
+    logToFirestore('Updated product: ${product.name}');
     return _db
         .collection('products')
         .doc(product.uniqueID)
@@ -180,6 +198,19 @@ class FirestoreService {
         .collection('resources')
         .doc(resource.uniqueID)
         .update(resource.toMap())
+        .onError((error, stackTrace) => throw new AddException());
+  }
+
+  Future<void> logToFirestore(String log) {
+    Log sLog = Log(
+      employee: UserProvider().currentUser.name,
+      log: log,
+      dateTime: DateTime.now(),
+    );
+    return _db
+        .collection('logs')
+        .doc(Timestamp.now().seconds.toString())
+        .set(sLog.toMap())
         .onError((error, stackTrace) => throw new AddException());
   }
 }

@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:inventory_management/src/model/log.dart';
 import 'package:inventory_management/src/model/product.dart';
 import 'package:inventory_management/src/model/resource.dart';
 
@@ -46,6 +49,19 @@ class UserProvider extends ChangeNotifier {
 
   Stream<List<Resource>> get listResources => _db.getResources();
   Stream<List<Product>> get listProducts => _db.getProducts();
+  Stream<List<Log>> get previousLogs => _db.getPrevLogs();
+
+  Stream<List<Resource>> get listResourcesFav {
+    return listResources.first
+        .then((value) => value.where((e) => e.isFavourite == true).toList())
+        .asStream();
+  }
+
+  Stream<List<Product>> get listProductFav {
+    return listProducts.first
+        .then((value) => value.where((e) => e.isFavourite == true).toList())
+        .asStream();
+  }
 
   Future<bool> isLoggedIn() async {
     var firebaseUser = _auth.currentUser;

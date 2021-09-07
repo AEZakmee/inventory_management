@@ -96,7 +96,7 @@ class ResourceRow extends StatelessWidget {
               title: 'You are about to delete ${resource.name}!\nAre you sure?',
               function: () {
                 Provider.of<ResourceProvider>(context, listen: false)
-                    .deleteResource(resource.uniqueID);
+                    .deleteResource(resource);
               },
             ),
           ),

@@ -36,3 +36,34 @@ Widget cardHeadlineMedium(String text, context) => Text(
             fontSize: getProportionateScreenHeight(25),
           ),
     );
+
+Widget cardHeadlineMedium3(String text, context) => Text(
+      text,
+      overflow: TextOverflow.fade,
+      maxLines: 1,
+      softWrap: false,
+      style: Theme.of(context).textTheme.headline3.copyWith(
+            fontSize: getProportionateScreenHeight(25),
+          ),
+    );
+
+Widget cardHeadlineSmall(String text, context) => Text(
+      text,
+      overflow: TextOverflow.fade,
+      maxLines: 1,
+      softWrap: false,
+      style: Theme.of(context).textTheme.headline5.copyWith(
+            fontSize: getProportionateScreenHeight(18),
+          ),
+    );
+
+Widget cardHeadlineSmall3(String text, context) => Text(
+      text,
+      overflow: TextOverflow.fade,
+      maxLines: 1,
+      softWrap: false,
+      style: Theme.of(context).textTheme.headline3.copyWith(
+            fontSize: getProportionateScreenHeight(18),
+            color: Theme.of(context).primaryColor,
+          ),
+    );
