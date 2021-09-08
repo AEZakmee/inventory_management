@@ -1,3 +1,5 @@
+import 'package:inventory_management/src/widgets/old_version.dart';
+
 import 'screens/screen_controller.dart';
 import 'screens/edit_resource/add_quantity_screen.dart';
 import 'screens/edit_resource/edit_resource_screen.dart';
@@ -14,4 +16,5 @@ final Map<String, WidgetBuilder> routes = {
   EditResourceScreen.routeName: (context) => EditResourceScreen(),
   EditResourceQuantityScreen.routeName: (context) =>
       EditResourceQuantityScreen(),
+  OldVersionScreen.routeName: (context) => OldVersionScreen(),
 };

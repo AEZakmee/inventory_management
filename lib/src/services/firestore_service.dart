@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:inventory_management/src/model/log.dart';
+import 'package:inventory_management/src/model/prev_order.dart';
 import 'package:inventory_management/src/model/product.dart';
 import 'package:inventory_management/src/model/resource.dart';
 import 'package:inventory_management/src/providers/user_provider.dart';
+import 'package:uuid/uuid.dart';
 import '../model/user.dart';
 
 class FirestoreService {
@@ -48,6 +50,17 @@ class FirestoreService {
     });
   }
 
+  Future<Product> fetchProduct(String resourceId) {
+    return _db
+        .collection('products')
+        .doc(resourceId)
+        .get()
+        .then((value) => Product.fromJson(value.data()))
+        .onError((error, stackTrace) {
+      throw new FetchException();
+    });
+  }
+
   Stream<List<Resource>> getResources() {
     return _db
         .collection('resources')
@@ -80,6 +93,11 @@ class FirestoreService {
         (value) => value.docs.map((e) => Product.fromJson(e.data())).toList());
   }
 
+  Future<List<Resource>> getResourcesFuture() {
+    return _db.collection('resources').get().then(
+        (value) => value.docs.map((e) => Resource.fromJson(e.data())).toList());
+  }
+
   Future<bool> _docExists(String collection, String name) async {
     var snapshots = await _db
         .collection(collection)
@@ -88,6 +106,14 @@ class FirestoreService {
         .get();
     if (snapshots.docs.length == 1) return true;
     return false;
+  }
+
+  Future<int> getVersionNumber() {
+    return _db
+        .collection('version')
+        .doc('version')
+        .get()
+        .then((value) => value['currentVersion']);
   }
 
   Future<bool> resourceExists(Resource resource) async {
@@ -99,7 +125,8 @@ class FirestoreService {
   }
 
   Future<void> addResource(Resource resource) {
-    logToFirestore('Added new resource: ${resource.name}');
+    logToFirestore(
+        'Added new resource: ${resource.name}, amount ${resource.quantity}');
     return _db
         .collection('resources')
         .doc(resource.uniqueID)
@@ -162,6 +189,40 @@ class FirestoreService {
     }
   }
 
+  Future<void> proceedProduct(Product product, int count) async {
+    await logPrevOrder(product, count);
+    List<Resource> resources = await getResourcesFuture();
+    product.totalOrdered += count;
+    await _db
+        .collection('products')
+        .doc(product.uniqueID)
+        .update(product.toMap());
+    if (resources != null) {
+      resources.forEach((res) {
+        product.resources.forEach((prod) async {
+          if (prod.res.uniqueID == res.uniqueID) {
+            res.quantity -= count * prod.res.quantity;
+            res.totalUsed += count * prod.res.quantity;
+            await _db
+                .collection('resources')
+                .doc(res.uniqueID)
+                .update(res.toMap());
+          }
+        });
+      });
+    }
+  }
+
+  Future<void> topUpResource(Resource resource, int count) {
+    logToFirestore('Top up resource: ${resource.name}, amount: $count');
+    resource.quantity += count;
+    return _db
+        .collection('resources')
+        .doc(resource.uniqueID)
+        .update(resource.toMap())
+        .onError((error, stackTrace) => throw new AddException());
+  }
+
   Future<void> deleteProduct(Product product) {
     logToFirestore('Deleted product: ${product.name}');
     return _db.collection('products').doc(product.uniqueID).delete();
@@ -203,7 +264,9 @@ class FirestoreService {
 
   Future<void> logToFirestore(String log) {
     Log sLog = Log(
-      employee: UserProvider().currentUser.name,
+      employee: UserProvider().currentUser != null
+          ? UserProvider().currentUser.name
+          : 'New user',
       log: log,
       dateTime: DateTime.now(),
     );
@@ -212,6 +275,61 @@ class FirestoreService {
         .doc(Timestamp.now().seconds.toString())
         .set(sLog.toMap())
         .onError((error, stackTrace) => throw new AddException());
+  }
+
+  Future<void> logPrevOrder(Product product, int count) {
+    Log sLog = Log(
+      employee: UserProvider().currentUser.name,
+      log: 'Proceed product: ${product.name}, total amount: $count',
+      dateTime: DateTime.now(),
+    );
+    PrevOrder prevOrder = PrevOrder(
+        createdAt: sLog.dateTime,
+        log: sLog,
+        product: product,
+        count: count,
+        uniqueId: Uuid().v4());
+    return _db
+        .collection('prevOrders')
+        .doc(prevOrder.uniqueId)
+        .set(prevOrder.toMap())
+        .onError((error, stackTrace) => throw new AddException());
+  }
+
+  Stream<List<PrevOrder>> getPrevOrders() {
+    return _db
+        .collection('prevOrders')
+        .orderBy('createdAt', descending: true)
+        .limit(10)
+        .snapshots()
+        .map((event) => event.docs)
+        .map(
+            (event) => event.map((e) => PrevOrder.fromJson(e.data())).toList());
+  }
+
+  Future<void> undoPrevOrder(PrevOrder prevOrder) async {
+    List<Resource> resources = await getResourcesFuture();
+    Product productUpd = await fetchProduct(prevOrder.product.uniqueID);
+    productUpd.totalOrdered -= prevOrder.count;
+    await _db
+        .collection('products')
+        .doc(productUpd.uniqueID)
+        .update(productUpd.toMap());
+    if (resources != null) {
+      resources.forEach((res) {
+        prevOrder.product.resources.forEach((prod) async {
+          if (prod.res.uniqueID == res.uniqueID) {
+            res.quantity += prevOrder.count * prod.res.quantity;
+            res.totalUsed -= prevOrder.count * prod.res.quantity;
+            await _db
+                .collection('resources')
+                .doc(res.uniqueID)
+                .update(res.toMap());
+          }
+        });
+      });
+    }
+    return _db.collection('prevOrders').doc(prevOrder.uniqueId).delete();
   }
 }
 

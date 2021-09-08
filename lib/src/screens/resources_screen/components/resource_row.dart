@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:inventory_management/src/providers/user_provider.dart';
+import 'package:inventory_management/src/widgets/bottom_sheet.dart';
 import '../../../widgets/text_widgets.dart';
 import '../../../widgets/utilities.dart';
-import '../../../screens/edit_resource/add_quantity_screen.dart';
 import '../../../model/resource.dart';
 import '../../../providers/resource_provider.dart';
 import '../../../widgets/pass_argument.dart';
@@ -69,11 +69,13 @@ class ResourceRow extends StatelessWidget {
             caption: 'Top up',
             color: Theme.of(context).secondaryHeaderColor,
             icon: Icons.add,
-            onTap: () => Navigator.pushNamed(
-              context,
-              EditResourceQuantityScreen.routeName,
-              arguments: ScreenArgumentsResource(resource),
-            ),
+            onTap: () => showModalBottomSheet(
+                context: context,
+                builder: (context) {
+                  return BottomSheetCustomResource(
+                    resource: resource,
+                  );
+                }),
           ),
         ],
         secondaryActions: <Widget>[
@@ -91,7 +93,7 @@ class ResourceRow extends StatelessWidget {
             caption: 'Delete',
             color: Theme.of(context).primaryColor,
             icon: Icons.delete,
-            onTap: () => kDeletePopup(
+            onTap: () => kInfoPopup(
               context: context,
               title: 'You are about to delete ${resource.name}!\nAre you sure?',
               function: () {

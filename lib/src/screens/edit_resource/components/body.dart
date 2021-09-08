@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../../size_config.dart';
 import '../../../widgets/paddings.dart';
 import '../../../widgets/text_widgets.dart';
 import '../../../widgets/utilities.dart';
@@ -45,6 +44,7 @@ class _BodyState extends State<Body> {
                   hasError: prov.hasError(ResourceField.Name),
                 ),
                 CustomTextField(
+                  isNumber: true,
                   textController: prov.quantityController,
                   hintText: "Enter quantity",
                   label: "Quantity",

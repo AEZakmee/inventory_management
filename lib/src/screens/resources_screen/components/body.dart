@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_management/src/providers/resource_provider.dart';
-import 'package:inventory_management/src/widgets/paddings.dart';
 import 'package:inventory_management/src/widgets/staggered_animations.dart';
 import 'package:inventory_management/src/widgets/text_widgets.dart';
 import '../../../model/resource.dart';

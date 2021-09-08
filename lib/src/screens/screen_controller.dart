@@ -1,9 +1,8 @@
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
-import 'package:inventory_management/src/widgets/app_bar.dart';
 import 'package:inventory_management/src/widgets/drawer.dart';
+import 'package:inventory_management/src/widgets/paddings.dart';
 import '../model/user.dart';
 import '../providers/user_provider.dart';
-import '../screens/edit_product/edit_product_screen.dart';
 import '../screens/main/components/body.dart';
 import '../screens/products/components/body.dart';
 import '../screens/resources_screen/components/body.dart';
@@ -112,7 +111,21 @@ class _MainScreenState extends State<MainScreen> with DisposableWidget {
     else
       return Scaffold(
         body: Center(
-          child: Text('You don\'t have perms'),
+          child: Container(
+            height: 100,
+            child: Column(
+              children: [
+                Text('You don\'t have perms'),
+                smallPadding(),
+                TextButton(
+                    onPressed: () {
+                      Provider.of<UserProvider>(context, listen: false)
+                          .logout();
+                    },
+                    child: Text('Sign out'))
+              ],
+            ),
+          ),
         ),
       );
   }
@@ -155,7 +168,9 @@ class ChildWidget extends StatelessWidget {
       case ScreenEnum.Products:
         return SafeArea(child: ProductsBody());
       case ScreenEnum.Employees:
-        return Container();
+        return Center(
+          child: Text('You don\'t have perms'),
+        );
       default:
         return Container();
     }

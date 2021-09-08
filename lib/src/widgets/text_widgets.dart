@@ -37,6 +37,16 @@ Widget cardHeadlineMedium(String text, context) => Text(
           ),
     );
 
+Widget cardHeadlineMediumSmall(String text, context) => Text(
+      text,
+      overflow: TextOverflow.fade,
+      maxLines: 1,
+      softWrap: false,
+      style: Theme.of(context).textTheme.headline5.copyWith(
+            fontSize: getProportionateScreenHeight(20),
+          ),
+    );
+
 Widget cardHeadlineMedium3(String text, context) => Text(
       text,
       overflow: TextOverflow.fade,

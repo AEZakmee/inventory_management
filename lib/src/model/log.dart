@@ -7,7 +7,7 @@ class Log {
 
   factory Log.fromJson(Map<String, dynamic> json) {
     return Log(
-      dateTime: json['dateTime'],
+      dateTime: json['dateTime'].toDate(),
       log: json['log'],
       employee: json['employee'],
     );

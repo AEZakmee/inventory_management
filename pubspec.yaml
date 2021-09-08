@@ -45,6 +45,9 @@ dependencies:
   fancy_bottom_navigation: ^0.3.2
   day_night_switcher: ^0.2.0+1
   shared_preferences: ^2.0.7
+  flutter_spinbox: ^0.6.0
+  flutter_awesome_buttons: ^1.1.0
+  timeago: ^3.1.0
 
 dev_dependencies:
   flutter_test:

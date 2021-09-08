@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:inventory_management/src/model/log.dart';
+import 'package:inventory_management/src/model/prev_order.dart';
 import 'package:inventory_management/src/model/product.dart';
 import 'package:inventory_management/src/model/resource.dart';
 
@@ -50,6 +52,7 @@ class UserProvider extends ChangeNotifier {
   Stream<List<Resource>> get listResources => _db.getResources();
   Stream<List<Product>> get listProducts => _db.getProducts();
   Stream<List<Log>> get previousLogs => _db.getPrevLogs();
+  Stream<List<PrevOrder>> get prevOrders => _db.getPrevOrders();
 
   Stream<List<Resource>> get listResourcesFav {
     return listResources.first
@@ -61,6 +64,36 @@ class UserProvider extends ChangeNotifier {
     return listProducts.first
         .then((value) => value.where((e) => e.isFavourite == true).toList())
         .asStream();
+  }
+
+  Future<int> getMaxProducts(Product product) async {
+    List<Resource> resourcess = await listResources.first;
+    int maxValue = 1000000;
+    resourcess.forEach((resource) {
+      product.resources.forEach((element) {
+        if (element.res.uniqueID == resource.uniqueID) {
+          maxValue =
+              min(maxValue, (resource.quantity / element.res.quantity).floor());
+        }
+      });
+    });
+    return maxValue;
+  }
+
+  Future<void> proceedOrder(Product product, int count) async {
+    await _db.proceedProduct(product, count);
+  }
+
+  Future<void> revertOrder(PrevOrder prevOrder) async {
+    await _db.undoPrevOrder(prevOrder);
+  }
+
+  Future<void> topUpResource(Resource resource, int count) async {
+    await _db.topUpResource(resource, count);
+  }
+
+  Future<int> getVersion() async {
+    return await _db.getVersionNumber();
   }
 
   Future<bool> isLoggedIn() async {

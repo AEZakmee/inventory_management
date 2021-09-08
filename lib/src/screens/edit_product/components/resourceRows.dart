@@ -64,8 +64,8 @@ class _PickedResourcesLVState extends State<PickedResourcesLV> {
     final prov = Provider.of<EditProductProvider>(context, listen: false);
     return ScaleTransition(
       child: GestureDetector(
-        onLongPress: () {
-          kDeletePopup(
+        onTap: () {
+          kInfoPopup(
               function: () {
                 _listKey.currentState.removeItem(
                   index,
@@ -163,6 +163,7 @@ class AddResourceRow extends StatelessWidget {
             Expanded(
               flex: 3,
               child: CustomTextField(
+                isNumber: true,
                 textController: prov.quantityController,
                 hintText: "Enter quantity",
                 label: "Quantity",

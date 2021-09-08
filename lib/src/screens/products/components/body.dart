@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inventory_management/src/widgets/bottom_sheet.dart';
 import 'package:inventory_management/src/widgets/paddings.dart';
 import 'package:inventory_management/src/widgets/staggered_animations.dart';
 import 'package:inventory_management/src/widgets/text_widgets.dart';
@@ -7,7 +8,6 @@ import '../../../providers/products_provider.dart';
 import '../../../providers/user_provider.dart';
 import '../../../screens/edit_product/edit_product_screen.dart';
 import '../../../size_config.dart';
-import '../../../widgets/constans.dart';
 import '../../../widgets/pass_argument.dart';
 import '../../../widgets/utilities.dart';
 import 'package:provider/provider.dart';
@@ -86,11 +86,13 @@ class GridViewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(
-        context,
-        EditProductScreen.routeName,
-        arguments: ScreenArgumentsProduct(product),
-      ),
+      onTap: () => showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return BottomSheetCustomProduct(
+              product: product,
+            );
+          }),
       child: Card(
         elevation: 8,
         child: Padding(
@@ -136,12 +138,36 @@ class GridViewCard extends StatelessWidget {
                                 .switchFavourite(product: product);
                             break;
                           case 'proceed':
-                            return null;
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return BottomSheetCustomProduct(
+                                    product: product,
+                                  );
+                                });
                         }
                       },
                     )
                   ],
                 ),
+                if (product.totalOrdered != 0)
+                  Row(
+                    children: [
+                      Text(
+                        'Total ordered:',
+                        style: Theme.of(context).textTheme.headline2.copyWith(
+                              fontSize: getProportionateScreenWidth(15),
+                            ),
+                      ),
+                      Spacer(),
+                      Text(
+                        product.totalOrdered.toInt().toString(),
+                        style: Theme.of(context).textTheme.headline2.copyWith(
+                              fontSize: getProportionateScreenWidth(15),
+                            ),
+                      ),
+                    ],
+                  ),
                 smallPadding(),
                 Text(
                   'Required Resources:',

@@ -11,6 +11,7 @@ class CustomTextField extends StatelessWidget {
     @required this.onChanged,
     @required this.hasError,
     @required this.errorString,
+    this.isNumber = false,
   }) : super(key: key);
   final textController;
   final String hintText;
@@ -18,6 +19,7 @@ class CustomTextField extends StatelessWidget {
   final bool hasError;
   final String errorString;
   final Function onChanged;
+  final bool isNumber;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -38,18 +40,19 @@ class CustomTextField extends StatelessWidget {
                   color: hasError
                       ? Theme.of(context).errorColor
                       : Theme.of(context).accentColor,
-                  fontSize: getProportionateScreenHeight(17),
+                  fontSize: getProportionateScreenHeight(20),
                 ),
               ),
             ),
           TextField(
+            keyboardType: isNumber ? TextInputType.number : TextInputType.name,
             controller: textController,
             onChanged: (v) => onChanged(v),
             showCursor: true,
             decoration: InputDecoration(
               hintText: hintText,
               contentPadding: EdgeInsets.only(
-                left: getProportionateScreenWidth(10),
+                left: getProportionateScreenWidth(15),
               ),
               fillColor: Colors.transparent,
               enabledBorder: hasError

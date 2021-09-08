@@ -1,3 +1,5 @@
+import 'package:inventory_management/src/widgets/old_version.dart';
+
 import '../screen_controller.dart';
 import '../sign_up/sign_up_screen.dart';
 import '../../providers/user_provider.dart';
@@ -26,7 +28,15 @@ class _LoadingScreenState extends State<LoadingScreen> {
     bool isLogged =
         await Provider.of<UserProvider>(context, listen: false).isLoggedIn();
     if (isLogged) {
-      Navigator.pushReplacementNamed(context, MainScreen.routeName);
+      int version =
+          await Provider.of<UserProvider>(context, listen: false).getVersion();
+      setState(() {});
+      print('version: ' + version.toString());
+      if (version == 2) {
+        Navigator.pushReplacementNamed(context, MainScreen.routeName);
+      } else {
+        Navigator.pushReplacementNamed(context, OldVersionScreen.routeName);
+      }
     } else {
       Navigator.pushReplacementNamed(context, SignUpScreen.routeName);
     }

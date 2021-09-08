@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:inventory_management/src/widgets/text_widgets.dart';
-import '../../../size_config.dart';
+import '../../../widgets/text_widgets.dart';
 import '../../../widgets/paddings.dart';
 import '../../../widgets/utilities.dart';
 import '../../../widgets/type_button.dart';
@@ -34,6 +33,7 @@ class _BodyState extends State<Body> {
                 editItemHeadlineText("Update quantity", context),
                 bigPadding(),
                 CustomTextField(
+                  isNumber: true,
                   textController: prov.quantityController,
                   hintText: "Enter Quantity",
                   label: "Quantity",
