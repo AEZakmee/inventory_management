@@ -12,10 +12,10 @@ import '../model/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class UserProvider extends ChangeNotifier {
-  UserProvider._privateConstructor();
-  static final UserProvider _instance = UserProvider._privateConstructor();
-  factory UserProvider() {
+class MainProvider extends ChangeNotifier {
+  MainProvider._privateConstructor();
+  static final MainProvider _instance = MainProvider._privateConstructor();
+  factory MainProvider() {
     return _instance;
   }
 
@@ -26,13 +26,6 @@ class UserProvider extends ChangeNotifier {
   AppUser get currentUser => _currentUser;
   set currentUser(AppUser user) {
     _currentUser = user;
-    notifyListeners();
-  }
-
-  List<CartItem> _cart = [];
-  List<CartItem> get cart => _cart;
-  void addToCard({Product product, int quantity}) {
-    _cart.add(CartItem(product: product, quantity: quantity));
     notifyListeners();
   }
 
@@ -81,15 +74,15 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future<void> proceedOrder(Product product, int count) async {
-    await _db.proceedProduct(product, count);
+    return await _db.proceedProduct(product, count);
   }
 
   Future<void> revertOrder(PrevOrder prevOrder) async {
-    await _db.undoPrevOrder(prevOrder);
+    return await _db.undoPrevOrder(prevOrder);
   }
 
   Future<void> topUpResource(Resource resource, int count) async {
-    await _db.topUpResource(resource, count);
+    return await _db.topUpResource(resource, count);
   }
 
   Future<int> getVersion() async {

@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:inventory_management/src/model/log.dart';
-import 'package:inventory_management/src/model/prev_order.dart';
-import 'package:inventory_management/src/model/product.dart';
-import 'package:inventory_management/src/model/resource.dart';
+import '../model/log.dart';
+import '../model/prev_order.dart';
+import '../model/product.dart';
+import '../model/resource.dart';
 import 'package:inventory_management/src/providers/user_provider.dart';
 import 'package:uuid/uuid.dart';
 import '../model/user.dart';
@@ -18,11 +18,13 @@ class FirestoreService {
 
   FirebaseFirestore _db = FirebaseFirestore.instance;
 
+  ////////////
   Future<void> addUser(AppUser user) {
     logToFirestore('New user registered: ${user.name}');
     return _db.collection('users').doc(user.userId).set(user.toMap());
   }
 
+//////////////
   Future<AppUser> fetchUser(String userId) {
     return _db
         .collection('users')
@@ -31,6 +33,7 @@ class FirestoreService {
         .then((value) => AppUser.fromJson(value.data()));
   }
 
+///////////
   Stream<AppUser> userStream(String userId) {
     return _db
         .collection('users')
@@ -264,8 +267,8 @@ class FirestoreService {
 
   Future<void> logToFirestore(String log) {
     Log sLog = Log(
-      employee: UserProvider().currentUser != null
-          ? UserProvider().currentUser.name
+      employee: MainProvider().currentUser != null
+          ? MainProvider().currentUser.name
           : 'New user',
       log: log,
       dateTime: DateTime.now(),
@@ -279,7 +282,7 @@ class FirestoreService {
 
   Future<void> logPrevOrder(Product product, int count) {
     Log sLog = Log(
-      employee: UserProvider().currentUser.name,
+      employee: MainProvider().currentUser.name,
       log: 'Proceed product: ${product.name}, total amount: $count',
       dateTime: DateTime.now(),
     );

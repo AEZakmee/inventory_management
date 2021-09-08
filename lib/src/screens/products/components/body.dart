@@ -18,7 +18,7 @@ class ProductsBody extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => ProductsProvider(),
       child: StreamBuilder<List<Product>>(
-        stream: Provider.of<UserProvider>(context).listProducts,
+        stream: Provider.of<MainProvider>(context).listProducts,
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Center(
@@ -134,7 +134,7 @@ class GridViewCard extends StatelessWidget {
                               arguments: ScreenArgumentsProduct(product),
                             );
                           case 'fav':
-                            Provider.of<UserProvider>(context, listen: false)
+                            Provider.of<MainProvider>(context, listen: false)
                                 .switchFavourite(product: product);
                             break;
                           case 'proceed':

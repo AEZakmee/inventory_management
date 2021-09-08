@@ -26,10 +26,10 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   void _handleUserJoin() async {
     bool isLogged =
-        await Provider.of<UserProvider>(context, listen: false).isLoggedIn();
+        await Provider.of<MainProvider>(context, listen: false).isLoggedIn();
     if (isLogged) {
       int version =
-          await Provider.of<UserProvider>(context, listen: false).getVersion();
+          await Provider.of<MainProvider>(context, listen: false).getVersion();
       setState(() {});
       print('version: ' + version.toString());
       if (version == 2) {

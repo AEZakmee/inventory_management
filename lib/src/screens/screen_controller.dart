@@ -48,7 +48,7 @@ class _MainScreenState extends State<MainScreen> with DisposableWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    if (Provider.of<UserProvider>(context).currentUser.role != Roles.User)
+    if (Provider.of<MainProvider>(context).currentUser.role != Roles.User)
       return Scaffold(
         bottomNavigationBar: FancyBottomNavigation(
           key: _bottomNavigationKey,
@@ -119,7 +119,7 @@ class _MainScreenState extends State<MainScreen> with DisposableWidget {
                 smallPadding(),
                 TextButton(
                     onPressed: () {
-                      Provider.of<UserProvider>(context, listen: false)
+                      Provider.of<MainProvider>(context, listen: false)
                           .logout();
                     },
                     child: Text('Sign out'))

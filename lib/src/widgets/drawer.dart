@@ -20,14 +20,14 @@ class CustomDrawer extends StatelessWidget {
               gradient: kLoginBackgroundGradient(context),
             ),
             accountName: Text(
-              Provider.of<UserProvider>(context).currentUser.name,
+              Provider.of<MainProvider>(context).currentUser.name,
               style: Theme.of(context)
                   .textTheme
                   .headline5
                   .copyWith(color: Colors.white),
             ),
             accountEmail: Text(
-              Provider.of<UserProvider>(context).currentUser.email,
+              Provider.of<MainProvider>(context).currentUser.email,
             ),
           ),
           ListTile(
@@ -48,7 +48,7 @@ class CustomDrawer extends StatelessWidget {
             leading: Icon(Icons.exit_to_app),
             title: Text('Exit'),
             onTap: () {
-              Provider.of<UserProvider>(context, listen: false).logout();
+              Provider.of<MainProvider>(context, listen: false).logout();
             },
           ),
         ],

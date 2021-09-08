@@ -126,7 +126,7 @@ class EditProductProvider extends ChangeNotifier {
       : null;
 
   void _loadResources() async {
-    _resourcesList = await UserProvider().listResources.first;
+    _resourcesList = await MainProvider().listResources.first;
     notifyListeners();
   }
 

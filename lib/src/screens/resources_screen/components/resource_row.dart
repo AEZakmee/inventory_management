@@ -55,14 +55,14 @@ class ResourceRow extends StatelessWidget {
                   caption: 'Unfavorite',
                   color: Theme.of(context).accentColor,
                   icon: Icons.star,
-                  onTap: () => Provider.of<UserProvider>(context, listen: false)
+                  onTap: () => Provider.of<MainProvider>(context, listen: false)
                       .switchFavourite(resource: resource),
                 )
               : IconSlideAction(
                   caption: 'Add to Favorites',
                   color: Theme.of(context).accentColor,
                   icon: Icons.star_border,
-                  onTap: () => Provider.of<UserProvider>(context, listen: false)
+                  onTap: () => Provider.of<MainProvider>(context, listen: false)
                       .switchFavourite(resource: resource),
                 ),
           IconSlideAction(

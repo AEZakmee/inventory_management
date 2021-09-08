@@ -14,7 +14,7 @@ class ResourcesBody extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => ResourceProvider(),
       child: StreamBuilder<List<Resource>>(
-          stream: Provider.of<UserProvider>(context).listResources,
+          stream: Provider.of<MainProvider>(context).listResources,
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return Center(

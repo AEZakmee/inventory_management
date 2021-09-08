@@ -29,13 +29,13 @@ class MainBody extends StatelessWidget {
           children: [
             mediumPadding(),
             MainResourceRow(
-              stream: Provider.of<UserProvider>(context).listResourcesFav,
+              stream: Provider.of<MainProvider>(context).listResourcesFav,
               title: 'Favorite Resources',
               onSeeAllTap: () => listViewKey.jumpToPage(1),
             ),
             mediumPadding(),
             MainProductRow(
-              stream: Provider.of<UserProvider>(context).listProductFav,
+              stream: Provider.of<MainProvider>(context).listProductFav,
               title: 'Favorite Products',
               onSeeAllTap: () => listViewKey.jumpToPage(2),
             ),
@@ -52,7 +52,7 @@ class PreviousOrders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<PrevOrder>>(
-      stream: Provider.of<UserProvider>(context).prevOrders,
+      stream: Provider.of<MainProvider>(context).prevOrders,
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return SizedBox.shrink();
@@ -137,7 +137,7 @@ class PreviousOrders extends StatelessWidget {
                           title:
                               'Are you sure you want to revert ${snapshot.data[index].product.name} order?',
                           function: () async {
-                            await Provider.of<UserProvider>(context,
+                            await Provider.of<MainProvider>(context,
                                     listen: false)
                                 .revertOrder(snapshot.data[index]);
                           },

@@ -28,7 +28,7 @@ class _BottomSheetCustomProductState extends State<BottomSheetCustomProduct> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<int>(
-      future: Provider.of<UserProvider>(context).getMaxProducts(widget.product),
+      future: Provider.of<MainProvider>(context).getMaxProducts(widget.product),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Center();
@@ -96,7 +96,7 @@ class _BottomSheetCustomProductState extends State<BottomSheetCustomProduct> {
                     text: 'Proceed Product',
                     onPressed: () async {
                       if (total <=
-                          await Provider.of<UserProvider>(context,
+                          await Provider.of<MainProvider>(context,
                                   listen: false)
                               .getMaxProducts(widget.product)) {
                         //ask for permission
@@ -105,7 +105,7 @@ class _BottomSheetCustomProductState extends State<BottomSheetCustomProduct> {
                           title: 'Please check if everything is correct!',
                           text: getStringOrder(widget.product, total),
                           function: () async {
-                            await Provider.of<UserProvider>(context,
+                            await Provider.of<MainProvider>(context,
                                     listen: false)
                                 .proceedOrder(widget.product, total.toInt());
                             kLongToast('Product proceed successfully', context);
@@ -192,7 +192,7 @@ class _BottomSheetCustomResourceState extends State<BottomSheetCustomResource> {
                 controller: _btnController,
                 text: 'Top Up Resource',
                 onPressed: () async {
-                  await Provider.of<UserProvider>(context, listen: false)
+                  await Provider.of<MainProvider>(context, listen: false)
                       .topUpResource(widget.resource, total.toInt());
                   kLongToast('Top up success', context);
                   Navigator.of(context).pop();
